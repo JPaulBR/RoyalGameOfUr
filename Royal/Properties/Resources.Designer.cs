@@ -63,6 +63,16 @@ namespace Royal.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap casino264 {
+            get {
+                object obj = ResourceManager.GetObject("casino264", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap corner {
             get {
                 object obj = ResourceManager.GetObject("corner", resourceCulture);

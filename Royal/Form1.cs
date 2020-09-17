@@ -36,5 +36,20 @@ namespace Royal
         {
 
         }
+
+        private void principalPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            System.Net.HttpWebRequest wreq;
+            wreq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create("https://github.com/JPaulBR/RoyalGameOfUr/blob/master/Royal/Resources/corner.gif?raw=true");
+            wreq.AllowWriteStreamBuffering = true;
+            using (var response = wreq.GetResponse())
+            using (var stream = response.GetResponseStream())
+                this.chip4.BackgroundImage = Bitmap.FromStream(stream);
+        }
     }
 }
