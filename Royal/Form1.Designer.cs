@@ -123,6 +123,7 @@
             this.throwButton.Size = new System.Drawing.Size(59, 38);
             this.throwButton.TabIndex = 3;
             this.throwButton.UseVisualStyleBackColor = false;
+            this.throwButton.Click += new System.EventHandler(this.throwButton_Click);
             // 
             // groupBox1
             // 
@@ -145,6 +146,7 @@
             // chip4
             // 
             this.chip4.BackColor = System.Drawing.Color.Transparent;
+            this.chip4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("chip4.BackgroundImage")));
             this.chip4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.chip4.Enabled = false;
             this.chip4.FlatAppearance.BorderSize = 0;
