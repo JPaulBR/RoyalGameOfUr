@@ -63,6 +63,16 @@ namespace Royal.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap casino12 {
+            get {
+                object obj = ResourceManager.GetObject("casino12", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap casino264 {
             get {
                 object obj = ResourceManager.GetObject("casino264", resourceCulture);
@@ -76,6 +86,76 @@ namespace Royal.Properties {
         internal static System.Drawing.Bitmap corner {
             get {
                 object obj = ResourceManager.GetObject("corner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dado1 {
+            get {
+                object obj = ResourceManager.GetObject("dado1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dado2 {
+            get {
+                object obj = ResourceManager.GetObject("dado2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dado3 {
+            get {
+                object obj = ResourceManager.GetObject("dado3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dado4 {
+            get {
+                object obj = ResourceManager.GetObject("dado4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dado5 {
+            get {
+                object obj = ResourceManager.GetObject("dado5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dado6 {
+            get {
+                object obj = ResourceManager.GetObject("dado6", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wood_wallpaper_18 {
+            get {
+                object obj = ResourceManager.GetObject("wood-wallpaper-18", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

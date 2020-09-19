@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Royal
@@ -50,6 +51,7 @@ namespace Royal
             this.chip4.BackgroundImage = Bitmap.FromStream(stream);
         }
 
+        /*This is for return any url and the attach on any button or anything else*/
         private static System.Net.HttpWebRequest giveMeUrl(string url) {
             System.Net.HttpWebRequest wreq;
             wreq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
@@ -57,18 +59,19 @@ namespace Royal
             return wreq;
         }
 
+        /*This function is for shuffle chips, receives the user tipe (human-pc) for change image button*/
         public void throwChips(string user) {
             changeImgButton(this.throwButton, "https://raw.githubusercontent.com/JPaulBR/RoyalGameOfUr/master/Royal/Resources/swap.png");
             int i = 0;
             Random random = new Random();
             string url = "https://raw.githubusercontent.com/JPaulBR/RoyalGameOfUr/master/Royal/Resources/dado";
-            while (i < 2) {
-                changeImgButton(this.chip1, url+random.Next(1, 6)+".png");
+            while (i < 4) {
+                changeImgButton(this.chip1, url + random.Next(1, 6) + ".png");
                 changeImgButton(this.chip2, url + random.Next(1, 6) + ".png");
                 changeImgButton(this.chip3, url + random.Next(1, 6) + ".png");
                 changeImgButton(this.chip4, url + random.Next(1, 6) + ".png");
+                System.Threading.Thread.Sleep(100);
                 i++;
-                System.Threading.Thread.Sleep(0100);
             }
             var c = Color.Chocolate;
             if (user == "human") { 
@@ -78,6 +81,7 @@ namespace Royal
             changeImgButton(this.throwButton, "https://raw.githubusercontent.com/JPaulBR/RoyalGameOfUr/master/Royal/Resources/"+user+".png");
         }
 
+        /*Change the image from any button, received button and the image url*/
         public void changeImgButton(Button btn,string url) {
             var wreq = giveMeUrl(url);
             using (var response = wreq.GetResponse())
@@ -89,7 +93,8 @@ namespace Royal
 
         private void throwButton_Click(object sender, EventArgs e)
         {
-            if (this.throwButton.Enabled) {
+            throwChips("human");
+            /*if (this.throwButton.Enabled) {
                 this.throwButton.Enabled = false;
                 throwChips("robot32");
                 // put turn for the pc
@@ -99,7 +104,7 @@ namespace Royal
                 throwChips("human");
                 //put turn for the human
 
-            }
+            }*/
         }
     }
 }
