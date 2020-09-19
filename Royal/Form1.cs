@@ -13,6 +13,13 @@ namespace Royal
 {
     public partial class Form1 : Form
     {
+        private Image chip1A = Properties.Resources.dado1;
+        private Image chip2A = Properties.Resources.dado2;
+        private Image chip3A = Properties.Resources.dado3;
+        private Image chip4A = Properties.Resources.dado4;
+        private Image chip5A = Properties.Resources.dado5;
+        private Image chip6A = Properties.Resources.dado6;
+
         public Form1()
         {
             InitializeComponent();
@@ -45,66 +52,31 @@ namespace Royal
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var wreq = giveMeUrl("https://github.com/JPaulBR/RoyalGameOfUr/blob/master/Royal/Resources/dado3.png?raw=true");
-            using (var response = wreq.GetResponse())
-            using (var stream = response.GetResponseStream())
-            this.chip4.BackgroundImage = Bitmap.FromStream(stream);
+            this.chip4.BackgroundImage = this.chip4A;
         }
 
-        /*This is for return any url and the attach on any button or anything else*/
-        private static System.Net.HttpWebRequest giveMeUrl(string url) {
-            System.Net.HttpWebRequest wreq;
-            wreq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
-            wreq.AllowWriteStreamBuffering = true;
-            return wreq;
-        }
 
-        /*This function is for shuffle chips, receives the user tipe (human-pc) for change image button*/
+        /*This function is for shuffle chips*/
         public void throwChips(string user) {
-            changeImgButton(this.throwButton, "https://raw.githubusercontent.com/JPaulBR/RoyalGameOfUr/master/Royal/Resources/swap.png");
+            Image[] imageList = {this.chip1A,this.chip2A,this.chip3A,this.chip4A,this.chip5A,this.chip6A};
             int i = 0;
             Random random = new Random();
-            string url = "https://raw.githubusercontent.com/JPaulBR/RoyalGameOfUr/master/Royal/Resources/dado";
-            while (i < 4) {
-                changeImgButton(this.chip1, url + random.Next(1, 6) + ".png");
-                changeImgButton(this.chip2, url + random.Next(1, 6) + ".png");
-                changeImgButton(this.chip3, url + random.Next(1, 6) + ".png");
-                changeImgButton(this.chip4, url + random.Next(1, 6) + ".png");
+            while (i < 10) {
+                this.chip1.BackgroundImage = imageList[random.Next(1, 6)];
+                this.chip2.BackgroundImage = imageList[random.Next(1, 6)];
+                this.chip3.BackgroundImage = imageList[random.Next(1, 6)];
+                this.chip4.BackgroundImage = imageList[random.Next(1, 6)];
                 System.Threading.Thread.Sleep(100);
                 i++;
-            }
-            var c = Color.Chocolate;
-            if (user == "human") { 
-                c= Color.Chartreuse;
-            }
-            this.throwButton.BackColor = c;
-            changeImgButton(this.throwButton, "https://raw.githubusercontent.com/JPaulBR/RoyalGameOfUr/master/Royal/Resources/"+user+".png");
-        }
-
-        /*Change the image from any button, received button and the image url*/
-        public void changeImgButton(Button btn,string url) {
-            var wreq = giveMeUrl(url);
-            using (var response = wreq.GetResponse())
-            using (var stream = response.GetResponseStream())
-            {
-                btn.BackgroundImage = Bitmap.FromStream(stream);
             }
         }
 
         private void throwButton_Click(object sender, EventArgs e)
         {
+            this.throwButton.Enabled = false;
+            this.throwButton.BackColor = Color.Gray;
+            this.throwButton.BackgroundImage = Properties.Resources.swap;
             throwChips("human");
-            /*if (this.throwButton.Enabled) {
-                this.throwButton.Enabled = false;
-                throwChips("robot32");
-                // put turn for the pc
-            }
-            else {
-                this.throwButton.Enabled = true;
-                throwChips("human");
-                //put turn for the human
-
-            }*/
         }
     }
 }
