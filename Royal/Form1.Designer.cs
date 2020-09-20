@@ -36,14 +36,14 @@
             this.chip3 = new System.Windows.Forms.Button();
             this.chip2 = new System.Windows.Forms.Button();
             this.chip1 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button24 = new System.Windows.Forms.Button();
-            this.button23 = new System.Windows.Forms.Button();
-            this.button18 = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
+            this.numberPcChip = new System.Windows.Forms.Label();
+            this.numberHumanChip = new System.Windows.Forms.Label();
+            this.CountP = new System.Windows.Forms.Label();
+            this.countH = new System.Windows.Forms.Label();
+            this.ChipHumanB = new System.Windows.Forms.Button();
+            this.ChipPcB = new System.Windows.Forms.Button();
+            this.ChipPc = new System.Windows.Forms.Button();
+            this.ChipHuman = new System.Windows.Forms.Button();
             this.button22 = new System.Windows.Forms.Button();
             this.button21 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
@@ -60,9 +60,9 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonA = new System.Windows.Forms.Button();
+            this.buttonB = new System.Windows.Forms.Button();
+            this.buttonC = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.principalPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -74,14 +74,14 @@
             this.principalPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("principalPanel.BackgroundImage")));
             this.principalPanel.Controls.Add(this.throwButton);
             this.principalPanel.Controls.Add(this.groupBox1);
-            this.principalPanel.Controls.Add(this.label4);
-            this.principalPanel.Controls.Add(this.label3);
-            this.principalPanel.Controls.Add(this.label2);
-            this.principalPanel.Controls.Add(this.label1);
-            this.principalPanel.Controls.Add(this.button24);
-            this.principalPanel.Controls.Add(this.button23);
-            this.principalPanel.Controls.Add(this.button18);
-            this.principalPanel.Controls.Add(this.button17);
+            this.principalPanel.Controls.Add(this.numberPcChip);
+            this.principalPanel.Controls.Add(this.numberHumanChip);
+            this.principalPanel.Controls.Add(this.CountP);
+            this.principalPanel.Controls.Add(this.countH);
+            this.principalPanel.Controls.Add(this.ChipHumanB);
+            this.principalPanel.Controls.Add(this.ChipPcB);
+            this.principalPanel.Controls.Add(this.ChipPc);
+            this.principalPanel.Controls.Add(this.ChipHuman);
             this.principalPanel.Controls.Add(this.button22);
             this.principalPanel.Controls.Add(this.button21);
             this.principalPanel.Controls.Add(this.button20);
@@ -98,9 +98,9 @@
             this.principalPanel.Controls.Add(this.button5);
             this.principalPanel.Controls.Add(this.button7);
             this.principalPanel.Controls.Add(this.button8);
-            this.principalPanel.Controls.Add(this.button4);
-            this.principalPanel.Controls.Add(this.button3);
-            this.principalPanel.Controls.Add(this.button2);
+            this.principalPanel.Controls.Add(this.buttonA);
+            this.principalPanel.Controls.Add(this.buttonB);
+            this.principalPanel.Controls.Add(this.buttonC);
             this.principalPanel.Controls.Add(this.button1);
             this.principalPanel.Location = new System.Drawing.Point(0, 0);
             this.principalPanel.Name = "principalPanel";
@@ -203,113 +203,116 @@
             this.chip1.TabIndex = 0;
             this.chip1.UseVisualStyleBackColor = false;
             // 
-            // label4
+            // numberPcChip
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label4.Location = new System.Drawing.Point(597, 224);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(23, 30);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "1";
-            this.label4.Click += new System.EventHandler(this.label1_Click);
+            this.numberPcChip.AutoSize = true;
+            this.numberPcChip.BackColor = System.Drawing.Color.Transparent;
+            this.numberPcChip.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numberPcChip.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.numberPcChip.Location = new System.Drawing.Point(597, 224);
+            this.numberPcChip.Name = "numberPcChip";
+            this.numberPcChip.Size = new System.Drawing.Size(23, 30);
+            this.numberPcChip.TabIndex = 1;
+            this.numberPcChip.Text = "1";
+            this.numberPcChip.Click += new System.EventHandler(this.label1_Click);
             // 
-            // label3
+            // numberHumanChip
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label3.Location = new System.Drawing.Point(597, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(23, 30);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "1";
-            this.label3.Click += new System.EventHandler(this.label1_Click);
+            this.numberHumanChip.AutoSize = true;
+            this.numberHumanChip.BackColor = System.Drawing.Color.Transparent;
+            this.numberHumanChip.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numberHumanChip.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.numberHumanChip.Location = new System.Drawing.Point(597, 12);
+            this.numberHumanChip.Name = "numberHumanChip";
+            this.numberHumanChip.Size = new System.Drawing.Size(23, 30);
+            this.numberHumanChip.TabIndex = 1;
+            this.numberHumanChip.Text = "1";
+            this.numberHumanChip.Click += new System.EventHandler(this.label1_Click);
             // 
-            // label2
+            // CountP
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label2.Location = new System.Drawing.Point(483, 224);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(23, 30);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "1";
-            this.label2.Click += new System.EventHandler(this.label1_Click);
+            this.CountP.AutoSize = true;
+            this.CountP.BackColor = System.Drawing.Color.Transparent;
+            this.CountP.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.CountP.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.CountP.Location = new System.Drawing.Point(483, 224);
+            this.CountP.Name = "CountP";
+            this.CountP.Size = new System.Drawing.Size(26, 30);
+            this.CountP.TabIndex = 1;
+            this.CountP.Text = "7";
+            this.CountP.Click += new System.EventHandler(this.label1_Click);
             // 
-            // label1
+            // countH
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(483, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 30);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "1";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.countH.AutoSize = true;
+            this.countH.BackColor = System.Drawing.Color.Transparent;
+            this.countH.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.countH.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.countH.Location = new System.Drawing.Point(483, 12);
+            this.countH.Name = "countH";
+            this.countH.Size = new System.Drawing.Size(26, 30);
+            this.countH.TabIndex = 1;
+            this.countH.Text = "7";
+            this.countH.Click += new System.EventHandler(this.label1_Click);
             // 
-            // button24
+            // ChipHumanB
             // 
-            this.button24.BackColor = System.Drawing.Color.Transparent;
-            this.button24.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button24.BackgroundImage")));
-            this.button24.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button24.FlatAppearance.BorderSize = 0;
-            this.button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button24.ForeColor = System.Drawing.Color.Crimson;
-            this.button24.Location = new System.Drawing.Point(574, 44);
-            this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(66, 68);
-            this.button24.TabIndex = 0;
-            this.button24.UseVisualStyleBackColor = false;
+            this.ChipHumanB.BackColor = System.Drawing.Color.Transparent;
+            this.ChipHumanB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ChipHumanB.BackgroundImage")));
+            this.ChipHumanB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ChipHumanB.Enabled = false;
+            this.ChipHumanB.FlatAppearance.BorderSize = 0;
+            this.ChipHumanB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChipHumanB.ForeColor = System.Drawing.Color.Crimson;
+            this.ChipHumanB.Location = new System.Drawing.Point(574, 44);
+            this.ChipHumanB.Name = "ChipHumanB";
+            this.ChipHumanB.Size = new System.Drawing.Size(66, 68);
+            this.ChipHumanB.TabIndex = 0;
+            this.ChipHumanB.UseVisualStyleBackColor = false;
             // 
-            // button23
+            // ChipPcB
             // 
-            this.button23.BackColor = System.Drawing.Color.Transparent;
-            this.button23.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button23.BackgroundImage")));
-            this.button23.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button23.FlatAppearance.BorderSize = 0;
-            this.button23.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button23.ForeColor = System.Drawing.Color.Transparent;
-            this.button23.Location = new System.Drawing.Point(574, 256);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(66, 68);
-            this.button23.TabIndex = 0;
-            this.button23.UseVisualStyleBackColor = false;
+            this.ChipPcB.BackColor = System.Drawing.Color.Transparent;
+            this.ChipPcB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ChipPcB.BackgroundImage")));
+            this.ChipPcB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ChipPcB.Enabled = false;
+            this.ChipPcB.FlatAppearance.BorderSize = 0;
+            this.ChipPcB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChipPcB.ForeColor = System.Drawing.Color.Transparent;
+            this.ChipPcB.Location = new System.Drawing.Point(574, 256);
+            this.ChipPcB.Name = "ChipPcB";
+            this.ChipPcB.Size = new System.Drawing.Size(66, 68);
+            this.ChipPcB.TabIndex = 0;
+            this.ChipPcB.UseVisualStyleBackColor = false;
             // 
-            // button18
+            // ChipPc
             // 
-            this.button18.BackColor = System.Drawing.Color.Transparent;
-            this.button18.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button18.BackgroundImage")));
-            this.button18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button18.FlatAppearance.BorderSize = 0;
-            this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button18.ForeColor = System.Drawing.Color.Transparent;
-            this.button18.Location = new System.Drawing.Point(461, 256);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(66, 68);
-            this.button18.TabIndex = 0;
-            this.button18.UseVisualStyleBackColor = false;
+            this.ChipPc.BackColor = System.Drawing.Color.Transparent;
+            this.ChipPc.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ChipPc.BackgroundImage")));
+            this.ChipPc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ChipPc.Enabled = false;
+            this.ChipPc.FlatAppearance.BorderSize = 0;
+            this.ChipPc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChipPc.ForeColor = System.Drawing.Color.Transparent;
+            this.ChipPc.Location = new System.Drawing.Point(461, 256);
+            this.ChipPc.Name = "ChipPc";
+            this.ChipPc.Size = new System.Drawing.Size(66, 68);
+            this.ChipPc.TabIndex = 0;
+            this.ChipPc.UseVisualStyleBackColor = false;
             // 
-            // button17
+            // ChipHuman
             // 
-            this.button17.BackColor = System.Drawing.Color.Transparent;
-            this.button17.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button17.BackgroundImage")));
-            this.button17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button17.FlatAppearance.BorderSize = 0;
-            this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button17.ForeColor = System.Drawing.Color.Crimson;
-            this.button17.Location = new System.Drawing.Point(461, 44);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(66, 68);
-            this.button17.TabIndex = 0;
-            this.button17.UseVisualStyleBackColor = false;
+            this.ChipHuman.BackColor = System.Drawing.Color.Transparent;
+            this.ChipHuman.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ChipHuman.BackgroundImage")));
+            this.ChipHuman.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ChipHuman.FlatAppearance.BorderSize = 0;
+            this.ChipHuman.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChipHuman.ForeColor = System.Drawing.Color.Crimson;
+            this.ChipHuman.Location = new System.Drawing.Point(461, 44);
+            this.ChipHuman.Name = "ChipHuman";
+            this.ChipHuman.Size = new System.Drawing.Size(66, 68);
+            this.ChipHuman.TabIndex = 0;
+            this.ChipHuman.UseVisualStyleBackColor = false;
             // 
             // button22
             // 
@@ -519,45 +522,46 @@
             this.button8.TabIndex = 0;
             this.button8.UseVisualStyleBackColor = false;
             // 
-            // button4
+            // buttonA
             // 
-            this.button4.BackColor = System.Drawing.Color.Black;
-            this.button4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button4.BackgroundImage")));
-            this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.ForeColor = System.Drawing.Color.Black;
-            this.button4.Location = new System.Drawing.Point(336, 12);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(102, 100);
-            this.button4.TabIndex = 0;
-            this.button4.UseVisualStyleBackColor = false;
+            this.buttonA.BackColor = System.Drawing.Color.Black;
+            this.buttonA.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonA.BackgroundImage")));
+            this.buttonA.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.buttonA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonA.ForeColor = System.Drawing.Color.Black;
+            this.buttonA.Location = new System.Drawing.Point(336, 12);
+            this.buttonA.Name = "buttonA";
+            this.buttonA.Size = new System.Drawing.Size(102, 100);
+            this.buttonA.TabIndex = 0;
+            this.buttonA.UseVisualStyleBackColor = false;
+            this.buttonA.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button3
+            // buttonB
             // 
-            this.button3.BackColor = System.Drawing.Color.Black;
-            this.button3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button3.BackgroundImage")));
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.ForeColor = System.Drawing.Color.Black;
-            this.button3.Location = new System.Drawing.Point(228, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(102, 100);
-            this.button3.TabIndex = 0;
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.buttonB.BackColor = System.Drawing.Color.Black;
+            this.buttonB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonB.BackgroundImage")));
+            this.buttonB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.buttonB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonB.ForeColor = System.Drawing.Color.Black;
+            this.buttonB.Location = new System.Drawing.Point(228, 12);
+            this.buttonB.Name = "buttonB";
+            this.buttonB.Size = new System.Drawing.Size(102, 100);
+            this.buttonB.TabIndex = 0;
+            this.buttonB.UseVisualStyleBackColor = false;
+            this.buttonB.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button2
+            // buttonC
             // 
-            this.button2.BackColor = System.Drawing.Color.Black;
-            this.button2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2.BackgroundImage")));
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(120, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(102, 100);
-            this.button2.TabIndex = 0;
-            this.button2.UseVisualStyleBackColor = false;
+            this.buttonC.BackColor = System.Drawing.Color.Black;
+            this.buttonC.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonC.BackgroundImage")));
+            this.buttonC.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.buttonC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonC.ForeColor = System.Drawing.Color.Black;
+            this.buttonC.Location = new System.Drawing.Point(120, 12);
+            this.buttonC.Name = "buttonC";
+            this.buttonC.Size = new System.Drawing.Size(102, 100);
+            this.buttonC.TabIndex = 0;
+            this.buttonC.UseVisualStyleBackColor = false;
             // 
             // button1
             // 
@@ -593,9 +597,9 @@
 
         private System.Windows.Forms.Panel principalPanel;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonA;
+        private System.Windows.Forms.Button buttonB;
+        private System.Windows.Forms.Button buttonC;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button22;
         private System.Windows.Forms.Button button21;
@@ -612,14 +616,14 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button24;
-        private System.Windows.Forms.Button button23;
-        private System.Windows.Forms.Button button18;
-        private System.Windows.Forms.Button button17;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label countH;
+        private System.Windows.Forms.Button ChipHumanB;
+        private System.Windows.Forms.Button ChipPcB;
+        private System.Windows.Forms.Button ChipPc;
+        private System.Windows.Forms.Button ChipHuman;
+        private System.Windows.Forms.Label numberPcChip;
+        private System.Windows.Forms.Label numberHumanChip;
+        private System.Windows.Forms.Label CountP;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button throwButton;
         private System.Windows.Forms.Button chip1;
