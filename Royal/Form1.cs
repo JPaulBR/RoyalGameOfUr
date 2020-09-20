@@ -19,16 +19,18 @@ namespace Royal
         private Image chip4A = Properties.Resources.dado4;
         private Image chip5A = Properties.Resources.dado5;
         private Image chip6A = Properties.Resources.dado6;
-        private Boolean flag = true;
 
         public Form1()
         {
             InitializeComponent();
+            if (!this.IsHandleCreated)
+            {
+                this.CreateHandle();
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -54,11 +56,6 @@ namespace Royal
         private void Form1_Load(object sender, EventArgs e)
         {
             this.chip4.BackgroundImage = this.chip4A;
-            this.numberHumanChip.Visible = false;
-            this.numberPcChip.Visible = false;
-            this.ChipHumanB.Visible = false;
-            this.ChipPcB.Visible = false;
-
         }
 
 
@@ -79,27 +76,15 @@ namespace Royal
 
         private void throwButton_Click(object sender, EventArgs e)
         {
-            //this.throwButton.Enabled = false;
+            this.throwButton.Enabled = false;
             this.throwButton.BackColor = Color.Gray;
             this.throwButton.BackgroundImage = Properties.Resources.swap;
             throwChips("human");
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button18_Click(object sender, EventArgs e)
         {
-            if (flag)
-            {
-                this.buttonA.BackgroundImage = null;
-                this.buttonA.BackColor = Color.Red;
-                flag = false;
-            }
-            else {
-                this.buttonA.BackgroundImage = Properties.Resources.Picture1;
-                this.buttonA.BackColor = Color.Black;
-                flag = true;
-            }
-            //System.Threading.Thread.Sleep(500);
-            //this.buttonA.BackgroundImage = Properties.Resources.Picture1;
+
         }
     }
 }
