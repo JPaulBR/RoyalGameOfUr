@@ -56,6 +56,7 @@ namespace Royal
         private void Form1_Load(object sender, EventArgs e)
         {
             this.chip4.BackgroundImage = this.chip4A;
+            
         }
 
 
