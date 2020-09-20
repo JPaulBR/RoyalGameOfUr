@@ -23,11 +23,14 @@ namespace Royal
         public Form1()
         {
             InitializeComponent();
+            if (!this.IsHandleCreated)
+            {
+                this.CreateHandle();
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -77,6 +80,11 @@ namespace Royal
             this.throwButton.BackColor = Color.Gray;
             this.throwButton.BackgroundImage = Properties.Resources.swap;
             throwChips("human");
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
