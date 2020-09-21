@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Royal
+namespace Royal.Controller
 {
-    class machine
+    class MachineController
     {
     }
 }

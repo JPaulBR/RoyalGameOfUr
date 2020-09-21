@@ -1,7 +1,10 @@
 ﻿using Royal.Model;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace Royal.Controller
 {
@@ -9,12 +12,14 @@ namespace Royal.Controller
     {
         private Board logic_board;
         private Form1 board;
+        private LogicGame logicGame;
 
         public Form1 GameForm { get => board; set => board= value; }
 
         public GameController()
         {
             board = new Form1();
+            logicGame = new LogicGame();
             init();
             logic_board = new Board();
 
@@ -42,8 +47,25 @@ namespace Royal.Controller
             this.board.button11.Click += new System.EventHandler(this.buttonCenter5_Click);
             this.board.button14.Click += new System.EventHandler(this.buttonCenter6_Click);
             this.board.button13.Click += new System.EventHandler(this.buttonCenter7_Click);
+            this.board.throwButton.Click += new System.EventHandler(this.throwButton_Click);
         }
 
+        public void throwButton_Click(object sender, EventArgs e)
+        {
+            Image[] resultList;
+            int i = 0;
+            while (i < 1) {
+                resultList=logicGame.throwChips();
+                this.board.chip1.BackgroundImage = resultList[0];
+                this.board.chip2.BackgroundImage = resultList[1];
+                this.board.chip3.BackgroundImage = resultList[2];
+                this.board.chip4.BackgroundImage = resultList[3];
+                Thread.Sleep(500);
+                i++;
+            }
+            MessageBox.Show("Avanza " + logicGame.getStepsCount());
+            
+        }
 
         public void buttonBlack0_Click(object sender, EventArgs e)
         {
