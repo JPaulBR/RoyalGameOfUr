@@ -51,8 +51,8 @@ namespace Royal.Controller
             this.board.button14.Click += new System.EventHandler(this.buttonCenter6_Click);
             this.board.button13.Click += new System.EventHandler(this.buttonCenter7_Click);
             this.board.throwButton.Click += new System.EventHandler(this.throwButton_Click);
+            MessageBox.Show("Empieza " + (logic_board.PlayerTurn == 1 ? "Rojo" : "Amarillo"));
             updateCount();
-            MessageBox.Show("Empieza " + (logic_board.PlayerTurn == 1 ? "Amarillo" : "Rojo"));
         }
 
         public void throwButton_Click(object sender, EventArgs e)
@@ -273,6 +273,12 @@ namespace Royal.Controller
             board.label2.Invoke(new Action(() => board.label2.Text = logic_board.BlackTotal.ToString() ));
             board.label3.Invoke(new Action(() => board.label3.Text = logic_board.WhiteOut.ToString()));
             board.label4.Invoke(new Action(() => board.label4.Text = logic_board.BlackOut.ToString() ));
+            updateTurn();
+        }
+
+        public void updateTurn()
+        {
+            board.labelTurno.Invoke(new Action(() => board.labelTurno.Text = logic_board.PlayerTurn == 1 ? "Rojo" : "Amarillo"));
         }
 
     }
