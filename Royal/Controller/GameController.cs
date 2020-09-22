@@ -22,14 +22,14 @@ namespace Royal.Controller
             this.touchButton = 0;
             board = new Form1();
             logicGame = new LogicGame();
-            init();
             logic_board = new Board();
-
+            init();
         }
 
         public void init()
         {
             this.board.FichaA.Click += new System.EventHandler(this.FichaA_Click);
+            this.board.FichaB.Click += new System.EventHandler(this.FichaB_Click);
             this.board.button4.Click += new System.EventHandler(this.buttonBlack0_Click);
             this.board.button3.Click += new System.EventHandler(this.buttonBlack1_Click);
             this.board.button2.Click += new System.EventHandler(this.buttonBlack2_Click);
@@ -51,6 +51,8 @@ namespace Royal.Controller
             this.board.button14.Click += new System.EventHandler(this.buttonCenter6_Click);
             this.board.button13.Click += new System.EventHandler(this.buttonCenter7_Click);
             this.board.throwButton.Click += new System.EventHandler(this.throwButton_Click);
+            updateCount();
+            MessageBox.Show("Empieza " + (logic_board.PlayerTurn == 1 ? "Amarillo" : "Rojo"));
         }
 
         public void throwButton_Click(object sender, EventArgs e)
@@ -73,6 +75,21 @@ namespace Royal.Controller
         private void FichaA_Click(object sender, EventArgs e)
         {
             this.touchButton = 1;
+
+            //Logic
+            logic_board.MoveFirstToken(1, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
+        }
+
+        private void FichaB_Click(object sender, EventArgs e)
+        {
+            this.touchButton = 1;
+
+            //Logic
+            logic_board.MoveFirstToken(0, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonBlack0_Click(object sender, EventArgs e)
@@ -90,111 +107,172 @@ namespace Royal.Controller
                 this.board.button4.BackgroundImage = null;
                 this.board.button4.BackColor = Color.Red;
             }
-            
+
+            // b_path 0
+            logic_board.MoveToken(1, 0, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
+
         }
 
         public void buttonBlack1_Click(object sender, EventArgs e)
         {
             // b_path 1
+            logic_board.MoveToken(1, 1, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonBlack2_Click(object sender, EventArgs e)
         {
             // b_path 2
+            logic_board.MoveToken(1, 2, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonBlack3_Click(object sender, EventArgs e)
         {
             // b_path 3
+            logic_board.MoveToken(1, 3, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonBlack4_Click(object sender, EventArgs e)
         {
             // b_path 12
+            logic_board.MoveToken(1, 12, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonBlack5_Click(object sender, EventArgs e)
         {
             // b_path 13
+            logic_board.MoveToken(1, 13, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonWhite0_Click(object sender, EventArgs e)
         {
             // w_path 0
+            logic_board.MoveToken(0, 0, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonWhite1_Click(object sender, EventArgs e)
         {
             // w_path 1
+            logic_board.MoveToken(0, 1, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonWhite2_Click(object sender, EventArgs e)
         {
             // w_path 2
+            logic_board.MoveToken(0, 2, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonWhite3_Click(object sender, EventArgs e)
         {
             // w_path 3
+            logic_board.MoveToken(0, 3, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonWhite4_Click(object sender, EventArgs e)
         {
             // w_path 12
+            logic_board.MoveToken(0, 12, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonWhite5_Click(object sender, EventArgs e)
         {
             // w_path 13
+            logic_board.MoveToken(0, 13, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonCenter0_Click(object sender, EventArgs e)
         {
             // b_path & w_path 4
+            logic_board.MoveToken(logic_board.PlayerTurn, 4, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonCenter1_Click(object sender, EventArgs e)
         {
             // b_path & w_path 5
+            logic_board.MoveToken(logic_board.PlayerTurn, 5, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonCenter2_Click(object sender, EventArgs e)
         {
             // b_path & w_path 6
+            logic_board.MoveToken(logic_board.PlayerTurn, 6, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonCenter3_Click(object sender, EventArgs e)
         {
             // b_path & w_path 7
+            logic_board.MoveToken(logic_board.PlayerTurn, 7, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonCenter4_Click(object sender, EventArgs e)
         {
             // b_path & w_path 8
+            logic_board.MoveToken(logic_board.PlayerTurn, 8, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonCenter5_Click(object sender, EventArgs e)
         {
             // b_path & w_path 9
+            logic_board.MoveToken(logic_board.PlayerTurn, 9, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonCenter6_Click(object sender, EventArgs e)
         {
             // w_path & w_path 10
+            logic_board.MoveToken(logic_board.PlayerTurn, 10, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void buttonCenter7_Click(object sender, EventArgs e)
         {
             // w_path & w_path 11
+            logic_board.MoveToken(logic_board.PlayerTurn, 11, logicGame.getStepsCount());
+            logic_board.PrintBoard();
+            updateCount();
         }
 
         public void updateCount()
         {
-            board.label1.Invoke(new Action(() => board.label1.Text = "100"));
-            board.label2.Invoke(new Action(() => board.label2.Text = "100"));
-            board.label3.Invoke(new Action(() => board.label3.Text = "100"));
-            board.label4.Invoke(new Action(() => board.label4.Text = "100"));
-
+            board.label1.Invoke(new Action(() => board.label1.Text = logic_board.WhiteTotal.ToString()));
+            board.label2.Invoke(new Action(() => board.label2.Text = logic_board.BlackTotal.ToString() ));
+            board.label3.Invoke(new Action(() => board.label3.Text = logic_board.WhiteOut.ToString()));
+            board.label4.Invoke(new Action(() => board.label4.Text = logic_board.BlackOut.ToString() ));
         }
 
     }
