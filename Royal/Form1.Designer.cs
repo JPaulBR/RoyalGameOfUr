@@ -42,8 +42,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button24 = new System.Windows.Forms.Button();
             this.button23 = new System.Windows.Forms.Button();
-            this.button18 = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
+            this.FichaB = new System.Windows.Forms.Button();
+            this.FichaA = new System.Windows.Forms.Button();
             this.button22 = new System.Windows.Forms.Button();
             this.button21 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
@@ -80,8 +80,8 @@
             this.principalPanel.Controls.Add(this.label1);
             this.principalPanel.Controls.Add(this.button24);
             this.principalPanel.Controls.Add(this.button23);
-            this.principalPanel.Controls.Add(this.button18);
-            this.principalPanel.Controls.Add(this.button17);
+            this.principalPanel.Controls.Add(this.FichaB);
+            this.principalPanel.Controls.Add(this.FichaA);
             this.principalPanel.Controls.Add(this.button22);
             this.principalPanel.Controls.Add(this.button21);
             this.principalPanel.Controls.Add(this.button20);
@@ -211,9 +211,10 @@
             this.label4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label4.Location = new System.Drawing.Point(597, 224);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(23, 30);
+            this.label4.Size = new System.Drawing.Size(27, 30);
             this.label4.TabIndex = 1;
-            this.label4.Text = "1";
+            this.label4.Text = "0";
+            this.label4.Visible = false;
             this.label4.Click += new System.EventHandler(this.label1_Click);
             // 
             // label3
@@ -224,9 +225,10 @@
             this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label3.Location = new System.Drawing.Point(597, 12);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(23, 30);
+            this.label3.Size = new System.Drawing.Size(27, 30);
             this.label3.TabIndex = 1;
-            this.label3.Text = "1";
+            this.label3.Text = "0";
+            this.label3.Visible = false;
             this.label3.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
@@ -237,9 +239,9 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label2.Location = new System.Drawing.Point(483, 224);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(23, 30);
+            this.label2.Size = new System.Drawing.Size(26, 30);
             this.label2.TabIndex = 1;
-            this.label2.Text = "1";
+            this.label2.Text = "7";
             this.label2.Click += new System.EventHandler(this.label1_Click);
             // 
             // label1
@@ -250,15 +252,17 @@
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label1.Location = new System.Drawing.Point(483, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 30);
+            this.label1.Size = new System.Drawing.Size(26, 30);
             this.label1.TabIndex = 1;
-            this.label1.Text = "1";
+            this.label1.Text = "7";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button24
             // 
             this.button24.BackColor = System.Drawing.Color.Transparent;
+            this.button24.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button24.BackgroundImage")));
             this.button24.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.button24.Enabled = false;
             this.button24.FlatAppearance.BorderSize = 0;
             this.button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button24.ForeColor = System.Drawing.Color.Crimson;
@@ -267,11 +271,14 @@
             this.button24.Size = new System.Drawing.Size(66, 68);
             this.button24.TabIndex = 0;
             this.button24.UseVisualStyleBackColor = false;
+            this.button24.Visible = false;
             // 
             // button23
             // 
             this.button23.BackColor = System.Drawing.Color.Transparent;
+            this.button23.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button23.BackgroundImage")));
             this.button23.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.button23.Enabled = false;
             this.button23.FlatAppearance.BorderSize = 0;
             this.button23.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button23.ForeColor = System.Drawing.Color.Transparent;
@@ -280,33 +287,38 @@
             this.button23.Size = new System.Drawing.Size(66, 68);
             this.button23.TabIndex = 0;
             this.button23.UseVisualStyleBackColor = false;
+            this.button23.Visible = false;
             // 
-            // button18
+            // FichaB
             // 
-            this.button18.BackColor = System.Drawing.Color.Transparent;
-            this.button18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button18.FlatAppearance.BorderSize = 0;
-            this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button18.ForeColor = System.Drawing.Color.Transparent;
-            this.button18.Location = new System.Drawing.Point(461, 256);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(66, 68);
-            this.button18.TabIndex = 0;
-            this.button18.UseVisualStyleBackColor = false;
-            this.button18.Click += new System.EventHandler(this.button18_Click);
+            this.FichaB.BackColor = System.Drawing.Color.Transparent;
+            this.FichaB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("FichaB.BackgroundImage")));
+            this.FichaB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.FichaB.Enabled = false;
+            this.FichaB.FlatAppearance.BorderSize = 0;
+            this.FichaB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.FichaB.ForeColor = System.Drawing.Color.Transparent;
+            this.FichaB.Location = new System.Drawing.Point(461, 256);
+            this.FichaB.Name = "FichaB";
+            this.FichaB.Size = new System.Drawing.Size(66, 68);
+            this.FichaB.TabIndex = 0;
+            this.FichaB.UseVisualStyleBackColor = false;
+            this.FichaB.Click += new System.EventHandler(this.button18_Click);
             // 
-            // button17
+            // FichaA
             // 
-            this.button17.BackColor = System.Drawing.Color.Transparent;
-            this.button17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button17.FlatAppearance.BorderSize = 0;
-            this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button17.ForeColor = System.Drawing.Color.Crimson;
-            this.button17.Location = new System.Drawing.Point(461, 44);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(66, 68);
-            this.button17.TabIndex = 0;
-            this.button17.UseVisualStyleBackColor = false;
+            this.FichaA.BackColor = System.Drawing.Color.Transparent;
+            this.FichaA.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("FichaA.BackgroundImage")));
+            this.FichaA.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.FichaA.FlatAppearance.BorderSize = 0;
+            this.FichaA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.FichaA.ForeColor = System.Drawing.Color.Crimson;
+            this.FichaA.Location = new System.Drawing.Point(461, 44);
+            this.FichaA.Name = "FichaA";
+            this.FichaA.Size = new System.Drawing.Size(66, 68);
+            this.FichaA.TabIndex = 0;
+            this.FichaA.UseVisualStyleBackColor = false;
+            this.FichaA.Click += new System.EventHandler(this.FichaA_Click);
             // 
             // button22
             // 
@@ -519,6 +531,7 @@
             // button4
             // 
             this.button4.BackColor = System.Drawing.Color.Black;
+            this.button4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button4.BackgroundImage")));
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.ForeColor = System.Drawing.Color.Black;
@@ -527,10 +540,12 @@
             this.button4.Size = new System.Drawing.Size(102, 100);
             this.button4.TabIndex = 0;
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.Black;
+            this.button3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button3.BackgroundImage")));
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.ForeColor = System.Drawing.Color.Black;
@@ -544,6 +559,7 @@
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.Black;
+            this.button2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2.BackgroundImage")));
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.ForeColor = System.Drawing.Color.Black;
@@ -610,8 +626,8 @@
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button button24;
         public System.Windows.Forms.Button button23;
-        public System.Windows.Forms.Button button18;
-        public System.Windows.Forms.Button button17;
+        public System.Windows.Forms.Button FichaB;
+        public System.Windows.Forms.Button FichaA;
         public System.Windows.Forms.Label label4;
         public System.Windows.Forms.Label label3;
         public System.Windows.Forms.Label label2;

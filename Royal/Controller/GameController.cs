@@ -13,11 +13,13 @@ namespace Royal.Controller
         private Board logic_board;
         private Form1 board;
         private LogicGame logicGame;
+        int touchButton;
 
         public Form1 GameForm { get => board; set => board= value; }
 
         public GameController()
         {
+            this.touchButton = 0;
             board = new Form1();
             logicGame = new LogicGame();
             init();
@@ -27,6 +29,7 @@ namespace Royal.Controller
 
         public void init()
         {
+            this.board.FichaA.Click += new System.EventHandler(this.FichaA_Click);
             this.board.button4.Click += new System.EventHandler(this.buttonBlack0_Click);
             this.board.button3.Click += new System.EventHandler(this.buttonBlack1_Click);
             this.board.button2.Click += new System.EventHandler(this.buttonBlack2_Click);
@@ -67,10 +70,26 @@ namespace Royal.Controller
             
         }
 
+        private void FichaA_Click(object sender, EventArgs e)
+        {
+            this.touchButton = 1;
+        }
+
         public void buttonBlack0_Click(object sender, EventArgs e)
         {
-            // b_path 0
-            updateCount();
+            this.touchButton += 1;
+            if (this.touchButton == 2)
+            {
+                //validation 
+                this.board.button4.BackgroundImage = Properties.Resources.ficha1;
+                this.board.button4.BackColor = Color.Black;
+            }
+            else {
+                //if the button has an image token then it is 1, otherwise it is 0
+                this.touchButton = 1;
+                this.board.button4.BackgroundImage = null;
+                this.board.button4.BackColor = Color.Red;
+            }
             
         }
 
