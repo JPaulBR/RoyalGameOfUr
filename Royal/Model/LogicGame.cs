@@ -74,22 +74,22 @@ namespace Royal.Model
 
         public Token[] genetareTokenHuman()
         {
-            this.tokensPc[0] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture1);
-            this.tokensPc[1] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture2);
-            this.tokensPc[2] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture1);
-            this.tokensPc[3] = new Token("Human", false, true, Color.Black, Properties.Resources.Roseta);
-            this.tokensPc[4] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture3);
-            this.tokensPc[5] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture2);
-            this.tokensPc[6] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture4);
-            this.tokensPc[7] = new Token("Human", false, true, Color.Black, Properties.Resources.Roseta);
-            this.tokensPc[8] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture2);
-            this.tokensPc[9] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture4);
-            this.tokensPc[10] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture1);
-            this.tokensPc[11] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture2);
-            this.tokensPc[12] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture5);
-            this.tokensPc[13] = new Token("Human", false, true, Color.Black, Properties.Resources.Roseta);
-            this.tokensPc[14] = new Token("Human", false, false, Color.Transparent, Properties.Resources.fichaA);
-            return this.tokensPc;
+            this.tokensHuman[0] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture1);
+            this.tokensHuman[1] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture2);
+            this.tokensHuman[2] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture1);
+            this.tokensHuman[3] = new Token("Human", false, true, Color.Black, Properties.Resources.Roseta);
+            this.tokensHuman[4] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture3);
+            this.tokensHuman[5] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture2);
+            this.tokensHuman[6] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture4);
+            this.tokensHuman[7] = new Token("Human", false, true, Color.Black, Properties.Resources.Roseta);
+            this.tokensHuman[8] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture2);
+            this.tokensHuman[9] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture4);
+            this.tokensHuman[10] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture1);
+            this.tokensHuman[11] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture2);
+            this.tokensHuman[12] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture5);
+            this.tokensHuman[13] = new Token("Human", false, true, Color.Black, Properties.Resources.Roseta);
+            this.tokensHuman[14] = new Token("Human", false, false, Color.Transparent, Properties.Resources.fichaA);
+            return this.tokensHuman;
         }
     }
 }

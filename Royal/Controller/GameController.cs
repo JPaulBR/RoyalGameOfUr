@@ -14,6 +14,8 @@ namespace Royal.Controller
         private Form1 board;
         private LogicGame logicGame;
         int touchButton;
+        Button[] listButtonHuman;
+        Button[] listButtonPc;
 
         public Form1 GameForm { get => board; set => board= value; }
 
@@ -30,29 +32,85 @@ namespace Royal.Controller
         {
             this.board.FichaA.Click += new System.EventHandler(this.FichaA_Click);
             this.board.FichaB.Click += new System.EventHandler(this.FichaB_Click);
-            this.board.button4.Click += new System.EventHandler(this.buttonBlack0_Click);
-            this.board.button3.Click += new System.EventHandler(this.buttonBlack1_Click);
-            this.board.button2.Click += new System.EventHandler(this.buttonBlack2_Click);
-            this.board.button1.Click += new System.EventHandler(this.buttonBlack3_Click);
-            this.board.button8.Click += new System.EventHandler(this.buttonBlack4_Click);
-            this.board.button7.Click += new System.EventHandler(this.buttonBlack5_Click);
-            this.board.button22.Click += new System.EventHandler(this.buttonWhite0_Click);
-            this.board.button21.Click += new System.EventHandler(this.buttonWhite1_Click);
-            this.board.button20.Click += new System.EventHandler(this.buttonWhite2_Click);
-            this.board.button19.Click += new System.EventHandler(this.buttonWhite3_Click);
-            this.board.button16.Click += new System.EventHandler(this.buttonWhite4_Click);
-            this.board.button15.Click += new System.EventHandler(this.buttonWhite5_Click);
-            this.board.button10.Click += new System.EventHandler(this.buttonCenter0_Click);
-            this.board.button9.Click += new System.EventHandler(this.buttonCenter1_Click);
-            this.board.button6.Click += new System.EventHandler(this.buttonCenter2_Click);
-            this.board.button5.Click += new System.EventHandler(this.buttonCenter3_Click);
-            this.board.button12.Click += new System.EventHandler(this.buttonCenter4_Click);
-            this.board.button11.Click += new System.EventHandler(this.buttonCenter5_Click);
-            this.board.button14.Click += new System.EventHandler(this.buttonCenter6_Click);
-            this.board.button13.Click += new System.EventHandler(this.buttonCenter7_Click);
+            this.board.H1.Click += new System.EventHandler(this.buttonBlack0_Click);
+            this.board.H2.Click += new System.EventHandler(this.buttonBlack1_Click);
+            this.board.H3.Click += new System.EventHandler(this.buttonBlack2_Click);
+            this.board.H4.Click += new System.EventHandler(this.buttonBlack3_Click);
+            this.board.H13.Click += new System.EventHandler(this.buttonBlack4_Click);
+            this.board.H14.Click += new System.EventHandler(this.buttonBlack5_Click);
+            this.board.P1.Click += new System.EventHandler(this.buttonWhite0_Click);
+            this.board.P2.Click += new System.EventHandler(this.buttonWhite1_Click);
+            this.board.P3.Click += new System.EventHandler(this.buttonWhite2_Click);
+            this.board.P4.Click += new System.EventHandler(this.buttonWhite3_Click);
+            this.board.P13.Click += new System.EventHandler(this.buttonWhite4_Click);
+            this.board.P14.Click += new System.EventHandler(this.buttonWhite5_Click);
+            this.board.N5.Click += new System.EventHandler(this.buttonCenter0_Click);
+            this.board.N6.Click += new System.EventHandler(this.buttonCenter1_Click);
+            this.board.N7.Click += new System.EventHandler(this.buttonCenter2_Click);
+            this.board.N8.Click += new System.EventHandler(this.buttonCenter3_Click);
+            this.board.N9.Click += new System.EventHandler(this.buttonCenter4_Click);
+            this.board.N10.Click += new System.EventHandler(this.buttonCenter5_Click);
+            this.board.N11.Click += new System.EventHandler(this.buttonCenter6_Click);
+            this.board.N12.Click += new System.EventHandler(this.buttonCenter7_Click);
             this.board.throwButton.Click += new System.EventHandler(this.throwButton_Click);
+            initializeButtonsHuman(); 
+            initializeButtonsPc();
             MessageBox.Show("Empieza " + (logic_board.PlayerTurn == 1 ? "Rojo" : "Amarillo"));
             updateCount();
+        }
+
+        public void initializeButtonsHuman() {
+            this.listButtonHuman = new Button[16];
+            this.listButtonHuman[0] = this.board.H1;
+            this.listButtonHuman[1] = this.board.H2;
+            this.listButtonHuman[2] = this.board.H3;
+            this.listButtonHuman[3] = this.board.H4;
+            this.listButtonHuman[4] = this.board.N5;
+            this.listButtonHuman[5] = this.board.N6;
+            this.listButtonHuman[6] = this.board.N7;
+            this.listButtonHuman[7] = this.board.N8;
+            this.listButtonHuman[8] = this.board.N9;
+            this.listButtonHuman[9] = this.board.N10;
+            this.listButtonHuman[10] = this.board.N11;
+            this.listButtonHuman[11] = this.board.N12;
+            this.listButtonHuman[12] = this.board.H13;
+            this.listButtonHuman[13] = this.board.H14;
+            this.listButtonHuman[14] = this.board.H15;
+            changeSymbolsButton(this.listButtonHuman, false);
+        }
+
+        public void initializeButtonsPc()
+        {
+            this.listButtonPc = new Button[15];
+            this.listButtonPc[0] = this.board.P1;
+            this.listButtonPc[1] = this.board.P2;
+            this.listButtonPc[2] = this.board.P3;
+            this.listButtonPc[3] = this.board.P4;
+            this.listButtonPc[4] = this.board.N5;
+            this.listButtonPc[5] = this.board.N6;
+            this.listButtonPc[6] = this.board.N7;
+            this.listButtonPc[7] = this.board.N8;
+            this.listButtonPc[8] = this.board.N9;
+            this.listButtonPc[9] = this.board.N10;
+            this.listButtonPc[10] = this.board.N11;
+            this.listButtonPc[11] = this.board.N12;
+            this.listButtonPc[12] = this.board.P13;
+            this.listButtonPc[13] = this.board.P14;
+            this.listButtonPc[14] = this.board.P15;
+            changeSymbolsButton(this.listButtonPc, true);
+        }
+
+        public void changeSymbolsButton(Button[] buttonsList,Boolean isPc) {
+            for (int i = 0; i < 15; i++) {
+                if (isPc){
+                    buttonsList[i].BackgroundImage = logicGame.genetareTokenPc()[i].getImage(); //obtain the image from specific i
+                    buttonsList[i].BackColor = logicGame.genetareTokenPc()[i].getColor();
+                }
+                else {
+                    buttonsList[i].BackgroundImage = logicGame.genetareTokenHuman()[i].getImage(); //obtain the image from specific i
+                    buttonsList[i].BackColor = logicGame.genetareTokenHuman()[i].getColor();
+                }
+            }
         }
 
         public void throwButton_Click(object sender, EventArgs e)
@@ -98,14 +156,14 @@ namespace Royal.Controller
             if (this.touchButton == 2)
             {
                 //validation 
-                this.board.button4.BackgroundImage = Properties.Resources.ficha1;
-                this.board.button4.BackColor = Color.Black;
+                this.board.H1.BackgroundImage = Properties.Resources.ficha1;
+                this.board.H1.BackColor = Color.Black;
             }
             else {
                 //if the button has an image token then it is 1, otherwise it is 0
                 this.touchButton = 1;
-                this.board.button4.BackgroundImage = null;
-                this.board.button4.BackColor = Color.Red;
+                this.board.H1.BackgroundImage = null;
+                this.board.H1.BackColor = Color.Red;
             }
 
             // b_path 0
