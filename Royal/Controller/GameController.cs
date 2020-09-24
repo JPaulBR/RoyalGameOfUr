@@ -17,7 +17,7 @@ namespace Royal.Controller
         Button[] listButtonHuman;
         Button[] listButtonPc;
 
-        public Form1 GameForm { get => board; set => board= value; }
+        public Form1 GameForm { get => board; set => board = value; }
 
         public GameController()
         {
@@ -26,6 +26,7 @@ namespace Royal.Controller
             logicGame = new LogicGame();
             logic_board = new Board();
             init();
+            disableAll();
         }
 
         public void init()
@@ -53,14 +54,14 @@ namespace Royal.Controller
             this.board.N11.Click += new System.EventHandler(this.buttonCenter6_Click);
             this.board.N12.Click += new System.EventHandler(this.buttonCenter7_Click);
             this.board.throwButton.Click += new System.EventHandler(this.throwButton_Click);
-            initializeButtonsHuman(); 
+            initializeButtonsHuman();
             initializeButtonsPc();
             MessageBox.Show("Empieza " + (logic_board.PlayerTurn == 1 ? "Rojo" : "Amarillo"));
             updateCount();
         }
 
         public void initializeButtonsHuman() {
-            this.listButtonHuman = new Button[16];
+            this.listButtonHuman = new Button[15];
             this.listButtonHuman[0] = this.board.H1;
             this.listButtonHuman[1] = this.board.H2;
             this.listButtonHuman[2] = this.board.H3;
@@ -76,7 +77,7 @@ namespace Royal.Controller
             this.listButtonHuman[12] = this.board.H13;
             this.listButtonHuman[13] = this.board.H14;
             this.listButtonHuman[14] = this.board.H15;
-            changeSymbolsButton(this.listButtonHuman, false);
+            //changeSymbolsButton(this.listButtonHuman, false);
         }
 
         public void initializeButtonsPc()
@@ -97,12 +98,12 @@ namespace Royal.Controller
             this.listButtonPc[12] = this.board.P13;
             this.listButtonPc[13] = this.board.P14;
             this.listButtonPc[14] = this.board.P15;
-            changeSymbolsButton(this.listButtonPc, true);
+            //changeSymbolsButton(this.listButtonPc, true);
         }
 
-        public void changeSymbolsButton(Button[] buttonsList,Boolean isPc) {
+        public void changeSymbolsButton(Button[] buttonsList, Boolean isPc) {
             for (int i = 0; i < 15; i++) {
-                if (isPc){
+                if (isPc) {
                     buttonsList[i].BackgroundImage = logicGame.genetareTokenPc()[i].getImage(); //obtain the image from specific i
                     buttonsList[i].BackColor = logicGame.genetareTokenPc()[i].getColor();
                 }
@@ -110,6 +111,18 @@ namespace Royal.Controller
                     buttonsList[i].BackgroundImage = logicGame.genetareTokenHuman()[i].getImage(); //obtain the image from specific i
                     buttonsList[i].BackColor = logicGame.genetareTokenHuman()[i].getColor();
                 }
+            }
+        }
+
+        public void disableAll()
+        {
+            foreach (Button b in listButtonPc)
+            {
+                b.Enabled = false;
+            }
+            foreach (Button b in listButtonHuman)
+            {
+                b.Enabled = false;
             }
         }
 
@@ -132,10 +145,31 @@ namespace Royal.Controller
 
         private void FichaA_Click(object sender, EventArgs e)
         {
-            this.touchButton = 1;
-
+            this.touchButton += 1;
+            if (this.touchButton == 2)
+            {
+                touchButton = 0;  
+                //validation 
+                this.board.H1.BackgroundImage = Properties.Resources.ficha1;
+                this.board.H1.BackColor = Color.Black;
+            }
+            else
+            {
+                touchButton = 1;
+                //disableAll();
+                List<int> tokens = logic_board.Moveable(1);
+                foreach (int i in tokens)
+                {
+                    listButtonHuman[i].Enabled = true;
+                }
+                if (logic_board.MoveFirstToken(1, logicGame.getStepsCount()))
+                {
+                    listButtonHuman[logicGame.getStepsCount() - 1].Enabled = true;
+                    listButtonHuman[logicGame.getStepsCount() - 1].BackgroundImage = null;
+                    listButtonHuman[logicGame.getStepsCount() - 1].BackColor = Color.Green;
+                }
+            }
             //Logic
-            logic_board.MoveFirstToken(1, logicGame.getStepsCount());
             logic_board.PrintBoard();
             updateCount();
         }
@@ -143,7 +177,7 @@ namespace Royal.Controller
         private void FichaB_Click(object sender, EventArgs e)
         {
             this.touchButton = 1;
-
+            disableAll();
             //Logic
             logic_board.MoveFirstToken(0, logicGame.getStepsCount());
             logic_board.PrintBoard();

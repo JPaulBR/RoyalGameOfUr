@@ -76,7 +76,8 @@ namespace Royal.Model
                     {
                         player_board[player_token[i] + moves] = 1;
                         player_token[i] += moves;
-                        player_total_token--;
+                        player_total_token -= 1;
+                        return true;
                     }
                 }
             }
@@ -104,7 +105,6 @@ namespace Royal.Model
                         CheckRemoveToken(player, player_token[i]);
                         return true;
                     }
-                    return false;
                 }
             }
             return false;
