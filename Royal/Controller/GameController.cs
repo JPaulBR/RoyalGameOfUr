@@ -13,9 +13,12 @@ namespace Royal.Controller
         private Board logic_board;
         private Form1 board;
         private LogicGame logicGame;
-        int touchButton;
+        int touchButton; // verify that the user press two times the different buttons, if is this is two, is because the user press two button, otherwise is one
+        int countSteps; //this is for the verify the movement is correct (steps+inicialbutton)
         Button[] listButtonHuman;
         Button[] listButtonPc;
+        int steps; //return the number of spaces that the user can be advanced on the table 
+
 
         public Form1 GameForm { get => board; set => board= value; }
 
@@ -25,6 +28,8 @@ namespace Royal.Controller
             board = new Form1();
             logicGame = new LogicGame();
             logic_board = new Board();
+            this.countSteps = 0;
+            this.steps = 0;
             init();
         }
 
@@ -55,12 +60,12 @@ namespace Royal.Controller
             this.board.throwButton.Click += new System.EventHandler(this.throwButton_Click);
             initializeButtonsHuman(); 
             initializeButtonsPc();
-            MessageBox.Show("Empieza " + (logic_board.PlayerTurn == 1 ? "Rojo" : "Amarillo"));
+            //MessageBox.Show("Empieza " + (logic_board.PlayerTurn == 1 ? "Rojo" : "Amarillo"));
             updateCount();
         }
 
         public void initializeButtonsHuman() {
-            this.listButtonHuman = new Button[16];
+            this.listButtonHuman = new Button[15];
             this.listButtonHuman[0] = this.board.H1;
             this.listButtonHuman[1] = this.board.H2;
             this.listButtonHuman[2] = this.board.H3;
@@ -126,6 +131,7 @@ namespace Royal.Controller
                 Thread.Sleep(500);
                 i++;
             }
+            this.steps = logicGame.getStepsCount();
             MessageBox.Show("Avanza " + logicGame.getStepsCount());
             
         }
@@ -133,11 +139,11 @@ namespace Royal.Controller
         private void FichaA_Click(object sender, EventArgs e)
         {
             this.touchButton = 1;
-
+            this.countSteps = this.steps + 0; //0 because is the inicial position on the board
             //Logic
-            logic_board.MoveFirstToken(1, logicGame.getStepsCount());
+            /*logic_board.MoveFirstToken(1, logicGame.getStepsCount());
             logic_board.PrintBoard();
-            updateCount();
+            updateCount();*/
         }
 
         private void FichaB_Click(object sender, EventArgs e)
@@ -153,7 +159,14 @@ namespace Royal.Controller
         public void buttonBlack0_Click(object sender, EventArgs e)
         {
             this.touchButton += 1;
-            if (this.touchButton == 2)
+            //if (isToken(0)){this.touchButton = 0;}
+            if (this.touchButton == 2) {
+                if (this.countSteps == 1) {
+                    this.board.H1.BackgroundImage = Properties.Resources.ficha1;
+                    this.board.H1.BackColor = Color.Black;
+                }
+            }
+            /*if (this.touchButton == 2)
             {
                 //validation 
                 this.board.H1.BackgroundImage = Properties.Resources.ficha1;
@@ -170,31 +183,61 @@ namespace Royal.Controller
             logic_board.MoveToken(1, 0, logicGame.getStepsCount());
             logic_board.PrintBoard();
             updateCount();
-
+            */
         }
 
         public void buttonBlack1_Click(object sender, EventArgs e)
         {
+            this.touchButton += 1;
+            //if (isToken(0)){this.touchButton = 0;}
+            if (this.touchButton == 2)
+            {
+                if (this.countSteps == 2)
+                {
+                    this.board.H2.BackgroundImage = Properties.Resources.ficha1;
+                    this.board.H2.BackColor = Color.Black;
+                }
+            }
             // b_path 1
-            logic_board.MoveToken(1, 1, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            //logic_board.MoveToken(1, 1, logicGame.getStepsCount());
+            //logic_board.PrintBoard();
+            //updateCount();
         }
 
         public void buttonBlack2_Click(object sender, EventArgs e)
         {
+            this.touchButton += 1;
+            //if (isToken(0)){this.touchButton = 0;}
+            if (this.touchButton == 2)
+            {
+                if (this.countSteps == 3)
+                {
+                    this.board.H3.BackgroundImage = Properties.Resources.ficha1;
+                    this.board.H3.BackColor = Color.Black;
+                }
+            }
             // b_path 2
-            logic_board.MoveToken(1, 2, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            //logic_board.MoveToken(1, 2, logicGame.getStepsCount());
+            //logic_board.PrintBoard();
+            //updateCount();
         }
 
         public void buttonBlack3_Click(object sender, EventArgs e)
         {
+            this.touchButton += 1;
+            //if (isToken(0)){this.touchButton = 0;}
+            if (this.touchButton == 2)
+            {
+                if (this.countSteps == 4)
+                {
+                    this.board.H4.BackgroundImage = Properties.Resources.ficha1;
+                    this.board.H4.BackColor = Color.Black;
+                }
+            }
             // b_path 3
-            logic_board.MoveToken(1, 3, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            //logic_board.MoveToken(1, 3, logicGame.getStepsCount());
+            //logic_board.PrintBoard();
+            //updateCount();
         }
 
         public void buttonBlack4_Click(object sender, EventArgs e)
