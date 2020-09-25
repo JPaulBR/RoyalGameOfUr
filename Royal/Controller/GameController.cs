@@ -103,15 +103,18 @@ namespace Royal.Controller
             //changeSymbolsButton(this.listButtonPc, true);
         }
 
-        public void changeSymbolsButton(Button[] buttonsList, Boolean isPc) {
+        public void refreshButtons() {
+
             for (int i = 0; i < 15; i++) {
-                if (isPc) {
-                    buttonsList[i].BackgroundImage = logicGame.genetareTokenPc()[i].getImage(); //obtain the image from specific i
-                    buttonsList[i].BackColor = logicGame.genetareTokenPc()[i].getColor();
+                if (logic_board.WhitePath[i] == 0)
+                {
+                    listButtonPc[i].BackgroundImage = logicGame.genetareTokenPc()[i].getImage(); //obtain the image from specific i
+                    listButtonPc[i].BackColor = logicGame.genetareTokenPc()[i].getColor();
                 }
-                else {
-                    buttonsList[i].BackgroundImage = logicGame.genetareTokenHuman()[i].getImage(); //obtain the image from specific i
-                    buttonsList[i].BackColor = logicGame.genetareTokenHuman()[i].getColor();
+                if (logic_board.BlackPath[i] == 0)
+                {
+                    listButtonHuman[i].BackgroundImage = logicGame.genetareTokenHuman()[i].getImage(); //obtain the image from specific i
+                    listButtonHuman[i].BackColor = logicGame.genetareTokenHuman()[i].getColor();
                 }
             }
         }
@@ -146,10 +149,47 @@ namespace Royal.Controller
             
         }
 
+        //1 is for human, 0 is for pc
+        public void changeSymbolButton(Button btn, int index, int player)
+        {
+            List<int> tokens = logic_board.Moveable(player);
+            if (isTokenPosition(index, tokens))
+            {
+                this.touchButton = 1;
+                this.tokenInitial = index;
+            }
+            else
+            {
+                this.touchButton += 1;
+                if (this.touchButton == 2)
+                {
+                    if (index == this.tokenInitial + this.steps)
+                    {
+                        btn.BackgroundImage = Properties.Resources.ficha1;
+                        btn.BackColor = Color.Black;
+                        bool movements;
+                        if (this.tokenInitial == -1)
+                        {
+                            movements = logic_board.MoveFirstToken(player, this.steps);
+                            logic_board.PrintBoard();
+                            updateCount();
+                        }
+                        else
+                        {
+                            movements = logic_board.MoveToken(player, index - this.steps, this.steps);
+                            logic_board.PrintBoard();
+                            updateCount();
+                        }
+                        refreshButtons();
+                    }
+                }
+            }
+        }
+
         private void FichaA_Click(object sender, EventArgs e)
         {
             this.touchButton = 1;
-            this.tokenInitial = 0;
+            this.tokenInitial = -1;
             //disableAll();
             List<int> tokens = logic_board.Moveable(1);
             foreach (int i in tokens)
@@ -197,41 +237,6 @@ namespace Royal.Controller
                 }
             }
             return false;
-        }
-
-        //1 is for human, 0 is for pc
-        public void changeSymbolButton(Button btn, int index, int player)
-        {
-            List<int> tokens = logic_board.Moveable(player);
-            if (isTokenPosition(index, tokens))
-            {
-                this.touchButton = 1;
-                this.tokenInitial = index + 1;
-            }
-            else
-            {
-                this.touchButton += 1;
-                if (this.touchButton == 2)
-                {
-                    if (index + 1 + this.tokenInitial == this.steps)
-                    {
-                        btn.BackgroundImage = Properties.Resources.ficha1;
-                        btn.BackColor = Color.Black;
-                        bool movements;
-                        if (this.tokenInitial == 0)
-                        {
-                            movements = logic_board.MoveFirstToken(player, this.steps);
-                            logic_board.PrintBoard();
-                            updateCount();
-                        }
-                        else {
-                            movements = logic_board.MoveToken(player, index, this.steps);
-                            logic_board.PrintBoard();
-                            updateCount();
-                        }
-                    }
-                }
-            }
         }
 
         public void buttonBlack0_Click(object sender, EventArgs e)

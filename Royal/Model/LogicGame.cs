@@ -68,7 +68,7 @@ namespace Royal.Model
             this.tokensPc[11] = new Token("Pc", false, false, Color.Black, Properties.Resources.Picture2);
             this.tokensPc[12] = new Token("Pc", false, false, Color.Black, Properties.Resources.Picture5);
             this.tokensPc[13] = new Token("Pc", false, true, Color.Black, Properties.Resources.Roseta);
-            this.tokensPc[14] = new Token("Pc", false, false, Color.Transparent, Properties.Resources.fichaB);
+            this.tokensPc[14] = new Token("Pc", false, false, Color.Transparent, null);
             return this.tokensPc;
         }
 
@@ -88,7 +88,7 @@ namespace Royal.Model
             this.tokensHuman[11] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture2);
             this.tokensHuman[12] = new Token("Human", false, false, Color.Black, Properties.Resources.Picture5);
             this.tokensHuman[13] = new Token("Human", false, true, Color.Black, Properties.Resources.Roseta);
-            this.tokensHuman[14] = new Token("Human", false, false, Color.Transparent, Properties.Resources.fichaA);
+            this.tokensHuman[14] = new Token("Human", false, false, Color.Transparent, null);
             return this.tokensHuman;
         }
     }

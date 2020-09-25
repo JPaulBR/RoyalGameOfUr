@@ -10,8 +10,10 @@ namespace Royal.Model
 {
     class Board
     {
-        int[] b_path;
-        int[] w_path;
+        private int[] b_path;
+        private int[] w_path;
+        public int[] BlackPath { get => b_path; }
+        public int[] WhitePath { get => w_path; }
 
         private int b_token_total;
         private int w_token_total;
@@ -31,8 +33,8 @@ namespace Royal.Model
 
         public Board(int total = 7)
         {
-            b_path = Enumerable.Repeat(0, 14).ToArray();
-            w_path = Enumerable.Repeat(0, 14).ToArray();
+            b_path = Enumerable.Repeat(0, 15).ToArray();
+            w_path = Enumerable.Repeat(0, 15).ToArray();
             player_turn = new Random().Next(2);
             b_token_total = total;
             w_token_total = total;
