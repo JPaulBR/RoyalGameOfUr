@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace Royal.Model
 {
@@ -40,7 +41,7 @@ namespace Royal.Model
             b_token_active = Enumerable.Repeat(-1, b_token_total).ToArray();
             w_token_active = Enumerable.Repeat(-1, w_token_total).ToArray();
         }
-
+        
         public void PrintBoard()
         {
             MessageBox.Show("B:  " + string.Join(" ", b_path) + "\nW: " + string.Join(" ", w_path));
@@ -135,6 +136,15 @@ namespace Royal.Model
                 return true;
             }
             return false;
+        }
+
+        public int ChangeTurn()
+        {
+            if (IsRoseta(player_turn))
+            {
+                return player_turn;
+            }
+            return player_turn == 1 ? 0 : 1;
         }
 
     }
