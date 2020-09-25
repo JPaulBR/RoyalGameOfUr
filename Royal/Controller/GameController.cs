@@ -150,6 +150,19 @@ namespace Royal.Controller
         {
             this.touchButton = 1;
             this.tokenInitial = 0;
+            //disableAll();
+            List<int> tokens = logic_board.Moveable(1);
+            foreach (int i in tokens)
+            {
+                listButtonHuman[i].Enabled = true;
+
+            }
+            /*if (logic_board.MoveFirstToken(1, logicGame.getStepsCount()))
+            {
+                listButtonHuman[logicGame.getStepsCount() - 1].Enabled = true;
+                listButtonHuman[logicGame.getStepsCount() - 1].BackgroundImage = null;
+                listButtonHuman[logicGame.getStepsCount() - 1].BackColor = Color.Green;
+            }*/
             /*if (this.touchButton == 2)
             {
                 touchButton = 0;  
@@ -160,18 +173,7 @@ namespace Royal.Controller
             else
             {
                 touchButton = 1;
-                //disableAll();
-                List<int> tokens = logic_board.Moveable(1);
-                foreach (int i in tokens)
-                {
-                    listButtonHuman[i].Enabled = true;
-                }
-                if (logic_board.MoveFirstToken(1, logicGame.getStepsCount()))
-                {
-                    listButtonHuman[logicGame.getStepsCount() - 1].Enabled = true;
-                    listButtonHuman[logicGame.getStepsCount() - 1].BackgroundImage = null;
-                    listButtonHuman[logicGame.getStepsCount() - 1].BackColor = Color.Green;
-                }
+                
             }
             //Logic
             logic_board.PrintBoard();
@@ -188,16 +190,54 @@ namespace Royal.Controller
             updateCount();
         }
 
-        public void buttonBlack0_Click(object sender, EventArgs e)
-        {
-            this.touchButton += 1;
-            //if (istoken){this.touchButton = 1}
-            if (this.touchButton == 2) {
-                if (1+this.tokenInitial == this.steps) {
-                    this.board.H1.BackgroundImage = Properties.Resources.ficha1;
-                    this.board.H1.BackColor = Color.Black;
+        private bool isTokenPosition(int index, List<int> tokens) {
+            foreach (int element in tokens) {
+                if (index == element) {
+                    return true;
                 }
             }
+            return false;
+        }
+
+        //1 is for human, 0 is for pc
+        public void changeSymbolButton(Button btn, int index, int player)
+        {
+            List<int> tokens = logic_board.Moveable(player);
+            if (isTokenPosition(index, tokens))
+            {
+                this.touchButton = 1;
+                this.tokenInitial = index + 1;
+            }
+            else
+            {
+                this.touchButton += 1;
+                if (this.touchButton == 2)
+                {
+                    if (index + 1 + this.tokenInitial == this.steps)
+                    {
+                        btn.BackgroundImage = Properties.Resources.ficha1;
+                        btn.BackColor = Color.Black;
+                        bool movements;
+                        if (this.tokenInitial == 0)
+                        {
+                            movements = logic_board.MoveFirstToken(player, this.steps);
+                            logic_board.PrintBoard();
+                            updateCount();
+                        }
+                        else {
+                            movements = logic_board.MoveToken(player, index, this.steps);
+                            logic_board.PrintBoard();
+                            updateCount();
+                        }
+                    }
+                }
+            }
+        }
+
+        public void buttonBlack0_Click(object sender, EventArgs e)
+        {
+            //if (isHuman){}
+            changeSymbolButton(this.board.H1, 0, 1);
                 /*if (this.touchButton == 2)
                 {
                     //validation 
@@ -211,7 +251,7 @@ namespace Royal.Controller
                     this.board.H1.BackColor = Color.Red;
                 }*/
 
-                // b_path 0
+            // b_path 0
             //logic_board.MoveToken(1, 0, logicGame.getStepsCount());
             //logic_board.PrintBoard();
             //updateCount();
@@ -220,16 +260,7 @@ namespace Royal.Controller
 
         public void buttonBlack1_Click(object sender, EventArgs e)
         {
-            this.touchButton += 1;
-            //if (istoken){this.touchButton = 1}
-            if (this.touchButton == 2)
-            {
-                if (2 + this.tokenInitial == this.steps)
-                {
-                    this.board.H2.BackgroundImage = Properties.Resources.ficha1;
-                    this.board.H2.BackColor = Color.Black;
-                }
-            }
+            changeSymbolButton(this.board.H2, 1, 1);
             // b_path 1
             //logic_board.MoveToken(1, 1, logicGame.getStepsCount());
             //logic_board.PrintBoard();
@@ -238,34 +269,18 @@ namespace Royal.Controller
 
         public void buttonBlack2_Click(object sender, EventArgs e)
         {
-            this.touchButton += 1;
-            //if (istoken){this.touchButton = 1}
-            if (this.touchButton == 2)
-            {
-                if (3 + this.tokenInitial == this.steps)
-                {
-                    this.board.H3.BackgroundImage = Properties.Resources.ficha1;
-                    this.board.H3.BackColor = Color.Black;
-                }
-            }
+            changeSymbolButton(this.board.H3, 2, 1);
             // b_path 2
             //logic_board.MoveToken(1, 2, logicGame.getStepsCount());
             //logic_board.PrintBoard();
             //updateCount();
         }
 
+        
+
         public void buttonBlack3_Click(object sender, EventArgs e)
         {
-            this.touchButton += 1;
-            //if (istoken){this.touchButton = 1}
-            if (this.touchButton == 2)
-            {
-                if (4 + this.tokenInitial == this.steps)
-                {
-                    this.board.H4.BackgroundImage = Properties.Resources.ficha1;
-                    this.board.H4.BackColor = Color.Black;
-                }
-            }
+            changeSymbolButton(this.board.H4, 3, 1);
             // b_path 3
             //logic_board.MoveToken(1, 3, logicGame.getStepsCount());
             //logic_board.PrintBoard();
@@ -274,34 +289,38 @@ namespace Royal.Controller
 
         public void buttonBlack4_Click(object sender, EventArgs e)
         {
+            changeSymbolButton(this.board.N5, 4, 1);
             // b_path 12
-            logic_board.MoveToken(1, 12, logicGame.getStepsCount());
+            /*logic_board.MoveToken(1, 12, logicGame.getStepsCount());
             logic_board.PrintBoard();
-            updateCount();
+            updateCount();*/
         }
 
         public void buttonBlack5_Click(object sender, EventArgs e)
         {
+            changeSymbolButton(this.board.N6, 5, 1);
             // b_path 13
-            logic_board.MoveToken(1, 13, logicGame.getStepsCount());
+            /*logic_board.MoveToken(1, 13, logicGame.getStepsCount());
             logic_board.PrintBoard();
-            updateCount();
+            updateCount();*/
         }
 
         public void buttonWhite0_Click(object sender, EventArgs e)
         {
+            changeSymbolButton(this.board.N7, 6, 1);
             // w_path 0
-            logic_board.MoveToken(0, 0, logicGame.getStepsCount());
+            /*logic_board.MoveToken(0, 0, logicGame.getStepsCount());
             logic_board.PrintBoard();
-            updateCount();
+            updateCount();*/
         }
 
         public void buttonWhite1_Click(object sender, EventArgs e)
         {
+            changeSymbolButton(this.board.N8, 7, 1);
             // w_path 1
-            logic_board.MoveToken(0, 1, logicGame.getStepsCount());
+            /*logic_board.MoveToken(0, 1, logicGame.getStepsCount());
             logic_board.PrintBoard();
-            updateCount();
+            updateCount();*/
         }
 
         public void buttonWhite2_Click(object sender, EventArgs e)
@@ -404,8 +423,8 @@ namespace Royal.Controller
         {
             board.label1.Invoke(new Action(() => board.label1.Text = logic_board.WhiteTotal.ToString()));
             board.label2.Invoke(new Action(() => board.label2.Text = logic_board.BlackTotal.ToString() ));
-            board.label3.Invoke(new Action(() => board.label3.Text = logic_board.WhiteOut.ToString()));
-            board.label4.Invoke(new Action(() => board.label4.Text = logic_board.BlackOut.ToString() ));
+            board.H15.Invoke(new Action(() => board.H15.Text = logic_board.WhiteOut.ToString()));
+            board.P15.Invoke(new Action(() => board.P15.Text = logic_board.BlackOut.ToString() ));
             updateTurn();
         }
 
