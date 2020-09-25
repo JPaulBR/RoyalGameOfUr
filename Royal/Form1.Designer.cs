@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.principalPanel = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.labelTurno = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.throwButton = new System.Windows.Forms.Button();
@@ -38,8 +40,6 @@
             this.chip3 = new System.Windows.Forms.Button();
             this.chip2 = new System.Windows.Forms.Button();
             this.chip1 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.H15 = new System.Windows.Forms.Button();
@@ -74,12 +74,12 @@
             // 
             this.principalPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.principalPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("principalPanel.BackgroundImage")));
+            this.principalPanel.Controls.Add(this.label4);
+            this.principalPanel.Controls.Add(this.label3);
             this.principalPanel.Controls.Add(this.labelTurno);
             this.principalPanel.Controls.Add(this.label5);
             this.principalPanel.Controls.Add(this.throwButton);
             this.principalPanel.Controls.Add(this.groupBox1);
-            this.principalPanel.Controls.Add(this.label4);
-            this.principalPanel.Controls.Add(this.label3);
             this.principalPanel.Controls.Add(this.label2);
             this.principalPanel.Controls.Add(this.label1);
             this.principalPanel.Controls.Add(this.H15);
@@ -106,11 +106,37 @@
             this.principalPanel.Controls.Add(this.H2);
             this.principalPanel.Controls.Add(this.H3);
             this.principalPanel.Controls.Add(this.H4);
-            this.principalPanel.Location = new System.Drawing.Point(0, 0);
+            this.principalPanel.Location = new System.Drawing.Point(0, -2);
             this.principalPanel.Name = "principalPanel";
             this.principalPanel.Size = new System.Drawing.Size(883, 491);
             this.principalPanel.TabIndex = 0;
             this.principalPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.principalPanel_Paint);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Showcard Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label4.Location = new System.Drawing.Point(563, 89);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(84, 23);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Tokens";
+            this.label4.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Showcard Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label3.Location = new System.Drawing.Point(563, 300);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 23);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Tokens";
+            this.label3.Click += new System.EventHandler(this.label1_Click);
             // 
             // labelTurno
             // 
@@ -233,34 +259,6 @@
             this.chip1.TabIndex = 0;
             this.chip1.UseVisualStyleBackColor = false;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label4.Location = new System.Drawing.Point(597, 224);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(27, 30);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "0";
-            this.label4.Visible = false;
-            this.label4.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label3.Location = new System.Drawing.Point(597, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 30);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "0";
-            this.label3.Visible = false;
-            this.label3.Click += new System.EventHandler(this.label1_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -290,34 +288,36 @@
             // H15
             // 
             this.H15.BackColor = System.Drawing.Color.Transparent;
-            this.H15.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("H15.BackgroundImage")));
             this.H15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.H15.Enabled = false;
-            this.H15.FlatAppearance.BorderSize = 0;
+            this.H15.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.H15.FlatAppearance.BorderSize = 3;
             this.H15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.H15.ForeColor = System.Drawing.Color.Crimson;
-            this.H15.Location = new System.Drawing.Point(574, 44);
+            this.H15.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.H15.ForeColor = System.Drawing.Color.White;
+            this.H15.Location = new System.Drawing.Point(571, 20);
             this.H15.Name = "H15";
             this.H15.Size = new System.Drawing.Size(66, 68);
             this.H15.TabIndex = 0;
+            this.H15.Text = "0";
             this.H15.UseVisualStyleBackColor = false;
-            this.H15.Visible = false;
             // 
             // P15
             // 
             this.P15.BackColor = System.Drawing.Color.Transparent;
-            this.P15.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("P15.BackgroundImage")));
-            this.P15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.P15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.P15.Enabled = false;
-            this.P15.FlatAppearance.BorderSize = 0;
+            this.P15.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.P15.FlatAppearance.BorderSize = 3;
             this.P15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.P15.ForeColor = System.Drawing.Color.Transparent;
-            this.P15.Location = new System.Drawing.Point(574, 256);
+            this.P15.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.P15.ForeColor = System.Drawing.Color.White;
+            this.P15.Location = new System.Drawing.Point(571, 232);
             this.P15.Name = "P15";
             this.P15.Size = new System.Drawing.Size(66, 68);
             this.P15.TabIndex = 0;
+            this.P15.Text = "0";
             this.P15.UseVisualStyleBackColor = false;
-            this.P15.Visible = false;
             // 
             // FichaB
             // 
@@ -658,8 +658,6 @@
         public System.Windows.Forms.Button P15;
         public System.Windows.Forms.Button FichaB;
         public System.Windows.Forms.Button FichaA;
-        public System.Windows.Forms.Label label4;
-        public System.Windows.Forms.Label label3;
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.Button throwButton;
         public System.Windows.Forms.Button chip1;
@@ -668,6 +666,8 @@
         public System.Windows.Forms.Button chip2;
         private System.Windows.Forms.Label label5;
         public System.Windows.Forms.Label labelTurno;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 
