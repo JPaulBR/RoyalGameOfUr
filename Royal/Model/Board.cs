@@ -69,7 +69,6 @@ namespace Royal.Model
         public bool MoveFirstToken(int player, int moves)
         {
             int[] player_token = player == 1 ? b_token_active : w_token_active;
-            int player_total_token = player == 1 ? b_token_total : w_token_total;
             int[] player_board = player == 1 ? b_path : w_path;
             for (int i = 0; i < player_token.Length; i++)
             {
@@ -79,7 +78,14 @@ namespace Royal.Model
                     {
                         player_board[player_token[i] + moves] = 1;
                         player_token[i] += moves;
-                        player_total_token -= 1;
+                        if (player == 0)
+                        {
+                            w_token_total -= 1;
+                        }
+                        else
+                        {
+                            b_token_total -= 1;
+                        }
                         return true;
                     }
                 }
@@ -99,14 +105,29 @@ namespace Royal.Model
             {
                 if (player_token[i] == token)
                 {
-
-                    if (token + moves < player_board.Length  && player_board[token + moves] != 1)
+                    if (token + moves == 15)
                     {
-                        player_token[i] = token + moves;
+                        player_token[i] = -2;
                         player_board[token] = 0;
-                        player_board[player_token[i]] = 1;
-                        CheckRemoveToken(player, player_token[i]);
+                        if (player == 0)
+                        {
+                            w_token_out += 1;
+                        }
+                        else
+                        {
+                            b_token_out += 1;
+                        }
                         return true;
+                    } else if (token + moves < 15)
+                    {
+                        if (player_board[token + moves] != 1)
+                        {
+                            player_token[i] = token + moves;
+                            player_board[token] = 0;
+                            player_board[player_token[i]] = 1;
+                            CheckRemoveToken(player, player_token[i]);
+                            return true;
+                        }
                     }
                 }
             }
@@ -119,15 +140,45 @@ namespace Royal.Model
          */
         public bool CheckRemoveToken(int player, int token)
         {
-            int[] opposite_board = player == 1 ? w_path : b_path;
-            int player_total_token = player == 1 ? w_token_total : b_token_total;
+            int[] opposite_board = player == 1 ? w_path : b_path; // Inverted
             if (opposite_board[token] == 1)
             {
                 opposite_board[token] = 0;
-                player_total_token++;
+                if (player == 0)
+                {
+                    w_token_total += 1;
+                } else
+                {
+                    b_token_total += 1;
+                }
                 return true;
             }
             return false;
+        }
+
+        public bool CheckWin(int player)
+        {
+            if (player == 0)
+            {
+                foreach (int token in w_token_active)
+                {
+                    if (token != -2)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                foreach (int token in b_token_active)
+                {
+                    if (token != -2)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         public bool IsRoseta(int player)
@@ -146,7 +197,8 @@ namespace Royal.Model
             {
                 return player_turn;
             }
-            return player_turn == 1 ? 0 : 1;
+            player_turn = player_turn == 1 ? 0 : 1;
+            return player_turn;
         }
 
     }

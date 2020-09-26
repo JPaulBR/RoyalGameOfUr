@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -28,7 +29,11 @@ namespace Royal.Controller
             logicGame = new LogicGame();
             logic_board = new Board();
             init();
-            //disableAll();
+            if (logic_board.PlayerTurn == 0)
+            {
+                throwDice();
+                nextPCTurn();
+            }
         }
 
         public void init()
@@ -55,10 +60,12 @@ namespace Royal.Controller
             this.board.N10.Click += new System.EventHandler(this.buttonCenter5_Click);
             this.board.N11.Click += new System.EventHandler(this.buttonCenter6_Click);
             this.board.N12.Click += new System.EventHandler(this.buttonCenter7_Click);
+            this.board.P15.Click += new System.EventHandler(this.buttonWhite6_Click);
+            this.board.H15.Click += new System.EventHandler(this.buttonBlack6_Click);
             this.board.throwButton.Click += new System.EventHandler(this.throwButton_Click);
             initializeButtonsHuman();
             initializeButtonsPc();
-            MessageBox.Show("Empieza " + (logic_board.PlayerTurn == 1 ? "Rojo" : "Amarillo"));
+            MessageBox.Show("Empieza " + (logic_board.PlayerTurn == 1 ? "Amarillo" : "Rojo"));
             updateCount();
         }
 
@@ -79,7 +86,6 @@ namespace Royal.Controller
             this.listButtonHuman[12] = this.board.H13;
             this.listButtonHuman[13] = this.board.H14;
             this.listButtonHuman[14] = this.board.H15;
-            //changeSymbolsButton(this.listButtonHuman, false);
         }
 
         public void initializeButtonsPc()
@@ -100,21 +106,22 @@ namespace Royal.Controller
             this.listButtonPc[12] = this.board.P13;
             this.listButtonPc[13] = this.board.P14;
             this.listButtonPc[14] = this.board.P15;
-            //changeSymbolsButton(this.listButtonPc, true);
         }
 
         public void refreshButtons() {
-
-            for (int i = 0; i < 15; i++) {
-                if (logic_board.WhitePath[i] == 0)
+            List<int> player1 = logic_board.Moveable(0); // Rojas
+            List<int> player2 = logic_board.Moveable(1); // Amarillas
+            for (int i = 0; i < 15; i++)
+            {
+                if (!player1.Contains(i) && !player2.Contains(i))
                 {
                     listButtonPc[i].BackgroundImage = logicGame.genetareTokenPc()[i].getImage(); //obtain the image from specific i
                     listButtonPc[i].BackColor = logicGame.genetareTokenPc()[i].getColor();
                 }
-                if (logic_board.BlackPath[i] == 0)
+                if (!player2.Contains(i) && !player1.Contains(i))
                 {
-                    listButtonHuman[i].BackgroundImage = logicGame.genetareTokenHuman()[i].getImage(); //obtain the image from specific i
-                    listButtonHuman[i].BackColor = logicGame.genetareTokenHuman()[i].getColor();
+                    listButtonHuman[i].BackgroundImage = logicGame.genetareTokenPc()[i].getImage(); //obtain the image from specific i
+                    listButtonHuman[i].BackColor = logicGame.genetareTokenPc()[i].getColor();
                 }
             }
         }
@@ -133,10 +140,16 @@ namespace Royal.Controller
 
         public void throwButton_Click(object sender, EventArgs e)
         {
+            throwDice();
+        }
+
+        public void throwDice()
+        {
             Image[] resultList;
             int i = 0;
-            while (i < 1) {
-                resultList=logicGame.throwChips();
+            while (i < 1)
+            {
+                resultList = logicGame.throwChips();
                 this.board.chip1.BackgroundImage = resultList[0];
                 this.board.chip2.BackgroundImage = resultList[1];
                 this.board.chip3.BackgroundImage = resultList[2];
@@ -146,11 +159,33 @@ namespace Royal.Controller
             }
             this.steps = logicGame.getStepsCount();
             MessageBox.Show("Avanza " + this.steps);
-            
+            if (steps == 0) // No turn
+            {
+                logic_board.ChangeTurn();
+                updateCount();
+                refreshButtons();
+                if (logic_board.PlayerTurn == 0)
+                {
+                    throwDice();
+                    nextPCTurn();
+                }
+            }
+        }
+
+        private bool isTokenPosition(int index, List<int> tokens)
+        {
+            foreach (int element in tokens)
+            {
+                if (index == element)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         //1 is for human, 0 is for pc
-        public void changeSymbolButton(Button btn, int index, int player)
+        public bool changeSymbolButton(Button btn, int index, int player)
         {
             List<int> tokens = logic_board.Moveable(player);
             if (isTokenPosition(index, tokens))
@@ -171,271 +206,204 @@ namespace Royal.Controller
                         if (this.tokenInitial == -1)
                         {
                             movements = logic_board.MoveFirstToken(player, this.steps);
-                            logic_board.PrintBoard();
-                            updateCount();
                         }
                         else
                         {
                             movements = logic_board.MoveToken(player, index - this.steps, this.steps);
-                            logic_board.PrintBoard();
-                            updateCount();
                         }
+                        if (logic_board.CheckWin(player))
+                        {
+                            return true;
+                        }
+                        logic_board.ChangeTurn();
+                        logic_board.PrintBoard();
+                        updateCount();
                         refreshButtons();
+                        //
+                        if (logic_board.PlayerTurn == 0)
+                        {
+                            throwDice();
+                            nextPCTurn();
+                        }
                     }
                 }
             }
+            return false;
+        }
+
+        private int nextPCTurn()
+        {
+            logic_board.ChangeTurn();
+            updateCount();
+            refreshButtons();
+            return 0;
         }
 
         private void FichaA_Click(object sender, EventArgs e)
         {
             this.touchButton = 1;
             this.tokenInitial = -1;
-            //disableAll();
             List<int> tokens = logic_board.Moveable(1);
             foreach (int i in tokens)
             {
                 listButtonHuman[i].Enabled = true;
 
             }
-            /*if (logic_board.MoveFirstToken(1, logicGame.getStepsCount()))
-            {
-                listButtonHuman[logicGame.getStepsCount() - 1].Enabled = true;
-                listButtonHuman[logicGame.getStepsCount() - 1].BackgroundImage = null;
-                listButtonHuman[logicGame.getStepsCount() - 1].BackColor = Color.Green;
-            }*/
-            /*if (this.touchButton == 2)
-            {
-                touchButton = 0;  
-                //validation 
-                this.board.H1.BackgroundImage = Properties.Resources.ficha1;
-                this.board.H1.BackColor = Color.Black;
-            }
-            else
-            {
-                touchButton = 1;
-                
-            }
-            //Logic
-            logic_board.PrintBoard();
-            updateCount();*/
         }
 
         private void FichaB_Click(object sender, EventArgs e)
         {
             this.touchButton = 1;
-            //disableAll();
             //Logic
             logic_board.MoveFirstToken(0, logicGame.getStepsCount());
             logic_board.PrintBoard();
             updateCount();
         }
 
-        private bool isTokenPosition(int index, List<int> tokens) {
-            foreach (int element in tokens) {
-                if (index == element) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public void buttonBlack0_Click(object sender, EventArgs e)
         {
-            //if (isHuman){}
             changeSymbolButton(this.board.H1, 0, 1);
-                /*if (this.touchButton == 2)
-                {
-                    //validation 
-                    this.board.H1.BackgroundImage = Properties.Resources.ficha1;
-                    this.board.H1.BackColor = Color.Black;
-                }
-                else {
-                    //if the button has an image token then it is 1, otherwise it is 0
-                    this.touchButton = 1;
-                    this.board.H1.BackgroundImage = null;
-                    this.board.H1.BackColor = Color.Red;
-                }*/
-
-            // b_path 0
-            //logic_board.MoveToken(1, 0, logicGame.getStepsCount());
-            //logic_board.PrintBoard();
-            //updateCount();
-
         }
+
 
         public void buttonBlack1_Click(object sender, EventArgs e)
         {
-            changeSymbolButton(this.board.H2, 1, 1);
             // b_path 1
-            //logic_board.MoveToken(1, 1, logicGame.getStepsCount());
-            //logic_board.PrintBoard();
-            //updateCount();
+            changeSymbolButton(this.board.H2, 1, 1);
         }
 
         public void buttonBlack2_Click(object sender, EventArgs e)
         {
-            changeSymbolButton(this.board.H3, 2, 1);
             // b_path 2
-            //logic_board.MoveToken(1, 2, logicGame.getStepsCount());
-            //logic_board.PrintBoard();
-            //updateCount();
+            changeSymbolButton(this.board.H3, 2, 1);
         }
-
-        
 
         public void buttonBlack3_Click(object sender, EventArgs e)
         {
-            changeSymbolButton(this.board.H4, 3, 1);
             // b_path 3
-            //logic_board.MoveToken(1, 3, logicGame.getStepsCount());
-            //logic_board.PrintBoard();
-            //updateCount();
+            changeSymbolButton(this.board.H4, 3, 1);
         }
 
         public void buttonBlack4_Click(object sender, EventArgs e)
         {
-            changeSymbolButton(this.board.N5, 4, 1);
             // b_path 12
-            /*logic_board.MoveToken(1, 12, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();*/
+            changeSymbolButton(this.board.H13, 12, 1);
         }
 
         public void buttonBlack5_Click(object sender, EventArgs e)
         {
-            changeSymbolButton(this.board.N6, 5, 1);
             // b_path 13
-            /*logic_board.MoveToken(1, 13, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();*/
+            changeSymbolButton(this.board.H14, 13, 1);
         }
 
         public void buttonWhite0_Click(object sender, EventArgs e)
         {
-            changeSymbolButton(this.board.N7, 6, 1);
             // w_path 0
-            /*logic_board.MoveToken(0, 0, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();*/
+            changeSymbolButton(this.board.P1, 0, 0);
         }
 
         public void buttonWhite1_Click(object sender, EventArgs e)
         {
-            changeSymbolButton(this.board.N8, 7, 1);
             // w_path 1
-            /*logic_board.MoveToken(0, 1, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();*/
+            changeSymbolButton(this.board.P2, 1, 0);
         }
 
         public void buttonWhite2_Click(object sender, EventArgs e)
         {
             // w_path 2
-            logic_board.MoveToken(0, 2, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.P3, 2, 0);
         }
 
         public void buttonWhite3_Click(object sender, EventArgs e)
         {
             // w_path 3
-            logic_board.MoveToken(0, 3, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.P4, 3, 0);
         }
 
         public void buttonWhite4_Click(object sender, EventArgs e)
         {
             // w_path 12
-            logic_board.MoveToken(0, 12, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.P13, 12, 0);
         }
 
         public void buttonWhite5_Click(object sender, EventArgs e)
         {
             // w_path 13
-            logic_board.MoveToken(0, 13, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.P14, 13, 0);
         }
 
         public void buttonCenter0_Click(object sender, EventArgs e)
         {
             // b_path & w_path 4
-            logic_board.MoveToken(logic_board.PlayerTurn, 4, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.N5, 4, logic_board.PlayerTurn);
         }
 
         public void buttonCenter1_Click(object sender, EventArgs e)
         {
             // b_path & w_path 5
-            logic_board.MoveToken(logic_board.PlayerTurn, 5, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.N6, 5, logic_board.PlayerTurn);
         }
 
         public void buttonCenter2_Click(object sender, EventArgs e)
         {
             // b_path & w_path 6
-            logic_board.MoveToken(logic_board.PlayerTurn, 6, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.N7, 6, logic_board.PlayerTurn);
         }
 
         public void buttonCenter3_Click(object sender, EventArgs e)
         {
             // b_path & w_path 7
-            logic_board.MoveToken(logic_board.PlayerTurn, 7, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.N8, 7, logic_board.PlayerTurn);
         }
 
         public void buttonCenter4_Click(object sender, EventArgs e)
         {
             // b_path & w_path 8
-            logic_board.MoveToken(logic_board.PlayerTurn, 8, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.N9, 8, logic_board.PlayerTurn);
         }
 
         public void buttonCenter5_Click(object sender, EventArgs e)
         {
             // b_path & w_path 9
-            logic_board.MoveToken(logic_board.PlayerTurn, 9, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.N10, 9, logic_board.PlayerTurn);
         }
 
         public void buttonCenter6_Click(object sender, EventArgs e)
         {
             // w_path & w_path 10
-            logic_board.MoveToken(logic_board.PlayerTurn, 10, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.N11, 10, logic_board.PlayerTurn);
         }
 
         public void buttonCenter7_Click(object sender, EventArgs e)
         {
             // w_path & w_path 11
-            logic_board.MoveToken(logic_board.PlayerTurn, 11, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+            changeSymbolButton(this.board.N12, 11, logic_board.PlayerTurn);
+        }
+
+        public void buttonWhite6_Click(object sender, EventArgs e)
+        {
+            // w_path 14
+            changeSymbolButton(this.board.P15, 14, logic_board.PlayerTurn);
+        }
+
+        public void buttonBlack6_Click(object sender, EventArgs e)
+        {
+            // w_path 14
+            changeSymbolButton(this.board.H15, 14, logic_board.PlayerTurn);
         }
 
         public void updateCount()
         {
-            board.label1.Invoke(new Action(() => board.label1.Text = logic_board.WhiteTotal.ToString()));
-            board.label2.Invoke(new Action(() => board.label2.Text = logic_board.BlackTotal.ToString() ));
-            board.H15.Invoke(new Action(() => board.H15.Text = logic_board.WhiteOut.ToString()));
-            board.P15.Invoke(new Action(() => board.P15.Text = logic_board.BlackOut.ToString() ));
+            board.label1.Invoke(new Action(() => board.label1.Text = logic_board.BlackTotal.ToString()));
+            board.label2.Invoke(new Action(() => board.label2.Text = logic_board.WhiteTotal.ToString()));
+            board.H15.Invoke(new Action(() => board.H15.Text = logic_board.BlackOut.ToString()));
+            board.P15.Invoke(new Action(() => board.P15.Text = logic_board.WhiteOut.ToString() ));
             updateTurn();
         }
 
         public void updateTurn()
         {
-            board.labelTurno.Invoke(new Action(() => board.labelTurno.Text = logic_board.PlayerTurn == 1 ? "Rojo" : "Amarillo"));
+            board.labelTurno.Invoke(new Action(() => board.labelTurno.Text = logic_board.PlayerTurn == 1 ? "Amarillo" : "Rojo"));
         }
 
     }
