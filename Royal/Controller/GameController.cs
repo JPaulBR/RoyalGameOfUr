@@ -14,6 +14,7 @@ namespace Royal.Controller
         private Board logic_board;
         private Form1 board;
         private LogicGame logicGame;
+        Machine pc = new Machine();
         int touchButton;
         int tokenInitial;
         int steps;//movements by tokens 
