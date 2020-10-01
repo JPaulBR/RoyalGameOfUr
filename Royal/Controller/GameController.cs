@@ -14,6 +14,7 @@ namespace Royal.Controller
         private Board logic_board;
         private Form1 board;
         private LogicGame logicGame;
+        Machine pc = new Machine();
         int touchButton;
         int tokenInitial;
         int steps;//movements by tokens 
@@ -156,23 +157,14 @@ namespace Royal.Controller
                 this.board.chip1.BackgroundImage = resultList[0];
                 this.board.chip2.BackgroundImage = resultList[1];
                 this.board.chip3.BackgroundImage = resultList[2];
-                this.board.chip4.BackgroundImage = resultList[3];
                 Thread.Sleep(500);
                 i++;
             }
             this.steps = logicGame.getStepsCount();
-            MessageBox.Show("Avanza " + this.steps);
-            if (steps == 0) // No turn
-            {
-                logic_board.ChangeTurn();
-                updateCount();
-                refreshButtons();
-                if (logic_board.PlayerTurn == 0)
-                {
-                    throwDice();
-                    nextPCTurn();
-                }
+            if (this.steps == 0) {
+                this.steps = 3;
             }
+            MessageBox.Show("Avanza " + this.steps);
         }
 
         private bool isTokenPosition(int index, List<int> tokens)
