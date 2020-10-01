@@ -145,6 +145,9 @@ namespace Royal.Controller
 
         public void throwDice()
         {
+            Console.Out.WriteLine("###########################");
+            Console.WriteLine("###########################");
+            System.Diagnostics.Debug.WriteLine("###########################");
             Image[] resultList;
             int i = 0;
             while (i < 1)
