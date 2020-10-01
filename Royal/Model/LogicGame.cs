@@ -30,15 +30,12 @@ namespace Royal.Model
             int a = random.Next(1, 6);
             int b = random.Next(1, 6);
             int c = random.Next(1, 6);
-            int d = random.Next(1, 6);
             this.newList[0] = imageList[a];
             this.newList[1] = imageList[b];
             this.newList[2] = imageList[c];
-            this.newList[3] = imageList[d];
             this.stepsCount[0] = a;
             this.stepsCount[1] = b;
             this.stepsCount[2] = c;
-            this.stepsCount[3] = d;
             return newList;
         }
 
