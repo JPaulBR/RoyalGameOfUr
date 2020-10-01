@@ -215,6 +215,7 @@ namespace Royal
                 return true;
             }
             return false;
+        }
 
         //Borrar (es solo por si se necesita)
         public void createJson() {
@@ -235,8 +236,6 @@ namespace Royal
                 List<dataJson> items = JsonConvert.DeserializeObject<List<dataJson>>(json);
             }
         }
-
-
 
         public class dataJson {
             int id;
