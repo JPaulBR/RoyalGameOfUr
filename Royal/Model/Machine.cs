@@ -66,7 +66,7 @@ namespace Royal
         {
             if (CheckWin(player, token_active)) 
             {
-                // Condicion terminal
+                // Terminal conditional
                 PrintBoard(board);
             }
             else
@@ -217,32 +217,51 @@ namespace Royal
             return false;
         }
 
-        //Borrar (es solo por si se necesita)
-        public void createJson() {
-            List<dataJson> listJson = new List<dataJson>();
-            int[] list = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            listJson.Add(new dataJson(1, list, list, 1, 1));
-            listJson.Add(new dataJson(2, list, list, 2, 2));
-            listJson.Add(new dataJson(3, list, list, 3, 3));
-            string json_data = JsonConvert.SerializeObject(listJson[0]);
-            JObject json_object = JObject.Parse(json_data);
-        }
-
-        public void LoadJson()
+        public List<dataJson> LoadJson()
         {
             using (StreamReader r = new StreamReader(@"C:\Users\Jean Paul\Desktop\jsonfile.json"))
             {
                 string json = r.ReadToEnd();
                 List<dataJson> items = JsonConvert.DeserializeObject<List<dataJson>>(json);
+                return items;
+            }
+        }
+
+        public void WriteInJson(int id,int[] arr1,int[] arr2,int root,int level) {
+            List<dataJson> items = LoadJson();
+            if (items == null) {
+                items = new List<dataJson>();
+            }
+            items.Add(new dataJson()
+            {
+                id = id,
+                array1 = arr1,
+                array2 = arr2,
+                root = root,
+                level = level
+            });
+            //open file stream
+            using (StreamWriter file = File.CreateText(@"C:\Users\Jean Paul\Desktop\jsonfile.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                //serialize object directly into file stream
+                serializer.Serialize(file, items);
             }
         }
 
         public class dataJson {
-            int id;
-            int[] array1 = new int [15];
-            int[] array2 = new int[15];
-            int root;
-            int level;
+            
+            public int id { get; set; }
+            public int[] array1 { get; set; }
+            public int[] array2 { get; set; }
+            public int root { get; set; }
+            public int level { get; set; }
+
+            /*private int id;
+            private int[] array1 = new int [15];
+            private int[] array2 = new int[15];
+            private int root;
+            private int level;
 
             public dataJson(int id,int[] array1,int[] array2,int root,int level) {
                 this.id = id;
@@ -258,7 +277,7 @@ namespace Royal
 
             public int[] getArray1() {
                 return this.array1;
-            }
+            }*/
         }
 
     }
