@@ -60,63 +60,6 @@ namespace Royal
             token_active[1] = Enumerable.Repeat(-1, 7).ToArray();
             MakeTreeAuxiliar(player, board, token_active, token_total, token_out, 1, 1);
         }
-        /*
-        private void MakeTreeAuxiliar(int player, int[][] board, int[][] token_active, int[] token_total, int[] token_out, int level, int id)
-        {
-            if (CheckWin(player, token_active) || level == 5)
-            {
-                level = 0;
-                // Condicion terminal
-                PrintBoard(board, level, player);
-            }
-            else
-            {
-                for (int e = 0; e <= 1; e++)
-                {
-                    switch(e)
-                    {
-                        case 1:
-                            List<int> tokens = Moveable(player, token_active);
-                            foreach (int token in tokens)
-                            {
-                                for (int i = 1; i <= 4; i++)
-                                {
-                                    if (MoveToken(player, board, token, i, token_active, token_total, token_out))
-                                    {
-                                        PrintBoard(board, level, player);
-                                        if (IsRoseta(player, board))
-                                        {
-                                            MakeTreeAuxiliar(player, board, token_active, token_total, token_out, level + 1, id+1);
-                                        }
-                                        else
-                                        {
-                                            MakeTreeAuxiliar((player == 1 ? 0 : 1), board, token_active, token_total, token_out, level + 1, id+1);
-                                        }
-                                    }
-                                }
-                            }
-                            break;
-                        case 0:
-                            for (int i = 1; i <= 4; i++)
-                            {
-                                if (MoveFirstToken(player, board, i, token_active, token_total))
-                                {
-                                    PrintBoard(board, level, player);
-                                    if (IsRoseta(player, board))
-                                    {
-                                        MakeTreeAuxiliar(player, board, token_active, token_total, token_out, level + 1, id+1);
-                                    }
-                                    else
-                                    {
-                                        MakeTreeAuxiliar((player == 1 ? 0 : 1), board, token_active, token_total, token_out, level + 1, id+1);
-                                    }
-                                }
-                            }
-                            break;
-                    }
-                }
-            }
-        }*/
 
         private void MakeTreeAuxiliar(int player, int[][] board, int[][] token_active, int[] token_total, int[] token_out, int level, int id)
         {
@@ -143,23 +86,29 @@ namespace Royal
                                 int rand2 = iter2.ElementAt(count2);
                                 iter2.RemoveAt(count2);
                                 bool replay = false;
-                                if (MoveToken(player, board, token, rand2, token_active, token_total, token_out, replay))
+
+                                int[][] copy = new int[2][];
+                                copy[0] = new int[15]; copy[1] = new int[15];
+                                Array.Copy(board[0], copy[0], 15);
+                                Array.Copy(board[1], copy[1], 15);
+
+                                if (MoveToken(player, copy, token, rand2, token_active, token_total, token_out, replay))
                                 {
                                     if (CheckWin(player, token_active))
                                     {
                                         // Condicion terminal
                                         Console.WriteLine("++++++++ WINNER +++++++");
-                                        PrintBoard(board, level, player);
+                                        PrintBoard(copy, level, player);
                                         return;
                                     }
-                                    PrintBoard(board, level, player);
+                                    PrintBoard(copy, level, player);
                                     if (replay) ///////
                                     {
-                                        MakeTreeAuxiliar(player, board, token_active, token_total, token_out, level + 1, id + 1);
+                                        MakeTreeAuxiliar(player, copy, token_active, token_total, token_out, level + 1, id + 1);
                                     }
                                     else
                                     {
-                                        MakeTreeAuxiliar((player == 1 ? 0 : 1), board, token_active, token_total, token_out, level + 1, id + 1);
+                                        MakeTreeAuxiliar((player == 1 ? 0 : 1), copy, token_active, token_total, token_out, level + 1, id + 1);
                                     }
                                 }
                             }
@@ -172,23 +121,29 @@ namespace Royal
                             int count2 = rnd.Next(iter3.Count);
                             int rand2 = iter3.ElementAt(count2);
                             iter3.RemoveAt(count2);
-                            if (MoveFirstToken(player, board, rand2, token_active, token_total))
+
+                            int[][] copy = new int[2][];
+                            copy[0] = new int[15]; copy[1] = new int[15];
+                            Array.Copy(board[0], copy[0], 15);
+                            Array.Copy(board[1], copy[1], 15);
+
+                            if (MoveFirstToken(player, copy, rand2, token_active, token_total))
                             {
                                 if (CheckWin(player, token_active))
                                 {
                                     // Condicion terminal
                                     Console.WriteLine("+++++++++++++++");
-                                    PrintBoard(board, level, player);
+                                    PrintBoard(copy, level, player);
                                     return;
                                 }
-                                PrintBoard(board, level, player);
+                                PrintBoard(copy, level, player);
                                 if (rand2 == 4)
                                 {
-                                    MakeTreeAuxiliar(player, board, token_active, token_total, token_out, level + 1, id + 1);
+                                    MakeTreeAuxiliar(player, copy, token_active, token_total, token_out, level + 1, id + 1);
                                 }
                                 else
                                 {
-                                    MakeTreeAuxiliar((player == 1 ? 0 : 1), board, token_active, token_total, token_out, level + 1, id + 1);
+                                    MakeTreeAuxiliar((player == 1 ? 0 : 1), copy, token_active, token_total, token_out, level + 1, id + 1);
                                 }
                             }
                         }

@@ -26,10 +26,16 @@ namespace Royal.Controller
 
         public GameController()
         {
+            logic_board = new Board();
+
+            int[] list = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            pc.WriteInJson(1, list, list, 1, 1); //is for write to the json file
+            int[][] l = { logic_board.WhitePath, logic_board.BlackPath };
+            pc.MakeTree(l, logic_board.PlayerTurn);
+
             this.touchButton = 0;
             board = new Form1();
             logicGame = new LogicGame();
-            logic_board = new Board();
             init();
             if (logic_board.PlayerTurn == 0)
             {
@@ -40,8 +46,6 @@ namespace Royal.Controller
 
         public void init()
         {
-            int[] list = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            pc.WriteInJson(1,list,list,1,1); //is for write to the json file
             this.board.FichaA.Click += new System.EventHandler(this.FichaA_Click);
             this.board.FichaB.Click += new System.EventHandler(this.FichaB_Click);
             this.board.H1.Click += new System.EventHandler(this.buttonBlack0_Click);
