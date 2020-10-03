@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Royal.Model.Tree;
+using TreeNode = Royal.Model.TreeNode;
 
 namespace Royal
 {
@@ -249,6 +251,21 @@ namespace Royal
             }
         }
 
+        public void LoadJsonInTree() {
+            List<dataJson> items = LoadJson();
+            Tree tree = new Tree();
+            TreeNode node = tree.insertRoot(items[0].id);
+            tree.root.printNode();
+            tree.AddChild(node, 3, 1);
+            tree.AddChild(node, 2, 1);
+            tree.AddChild(node, 4, 2);
+            /*for (int i = 1; i < items.Count; i++)
+            {
+                tree.AddChild(node, items[i].id, items[i].root);
+            }*/
+            tree.seeChildren(node);
+        }
+
         public class dataJson {
             
             public int id { get; set; }
@@ -257,27 +274,6 @@ namespace Royal
             public int root { get; set; }
             public int level { get; set; }
 
-            /*private int id;
-            private int[] array1 = new int [15];
-            private int[] array2 = new int[15];
-            private int root;
-            private int level;
-
-            public dataJson(int id,int[] array1,int[] array2,int root,int level) {
-                this.id = id;
-                this.array1 = array1;
-                this.array2 = array2;
-                this.root = root;
-                this.level = level;
-            }
-
-            public int getId() {
-                return this.id;
-            }
-
-            public int[] getArray1() {
-                return this.array1;
-            }*/
         }
 
     }
