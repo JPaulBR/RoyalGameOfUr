@@ -29,6 +29,10 @@ namespace Royal.Model
         int[] w_token_active;
 
         int player_turn;
+
+
+        public int TurnCounter { get => TurnCounter; set => TurnCounter = value; }
+
         public int PlayerTurn { get => player_turn; set => player_turn = value; }
 
         public Board(int total = 7)
@@ -42,6 +46,18 @@ namespace Royal.Model
             w_token_out = 0;
             b_token_active = Enumerable.Repeat(-1, b_token_total).ToArray();
             w_token_active = Enumerable.Repeat(-1, w_token_total).ToArray();
+            TurnCounter = 1;
+        }
+
+        public int GetMove(int turn)
+        {
+            int[] moves = { 1, 2, 3, 3, 2, 4, 2, 2, 1, 3, 1, 1, 4, 1, 1, 1, 3, 4, 1, 3, 1, 2, 1, 1, 1, 3, 2, 2, 2, 2, 2, 1, 2, 2, 3, 2, 1, 4, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3,
+                1, 1, 2, 2, 3, 1, 3, 1, 2, 3, 1, 4, 1, 2, 4, 1, 2, 4, 1, 2, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 1, 4, 4, 1, 4, 2, 1, 1, 1, 3, 1, 3, 1, 2, 2, 1, 2, 2, 4, 2,
+                2, 1, 1, 4, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 1, 2, 2, 4, 1, 3, 1, 1, 4, 1, 2, 1, 1, 2, 1, 2, 4, 1, 2, 3, 2, 1, 1, 2, 1, 4, 1, 1, 2, 1, 1, 1, 3, 1, 1, 2, 1, 4,
+                4, 4, 1, 2, 4, 4, 1, 3, 1, 2, 1, 4, 4, 1, 2, 1, 2, 2, 2, 4, 1, 2, 3, 2, 2, 1, 2, 2, 1, 3, 1, 3, 1, 2, 3, 3, 1, 3, 2, 2, 3, 2, 1, 4, 1, 3, 1, 2, 2, 3, 3, 2,
+                1, 2, 2, 1, 1, 1, 2, 1, 2, 1, 4, 4, 1, 4, 2, 1, 2, 3, 2, 2, 4, 2, 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 3, 2, 1, 2, 1, 1, 1, 3, 2, 2, 1, 1, 2, 2, 2, 1, 2,
+                3, 1, 4, 1, 2, 4, 2, 4, 3, 2, 1, 2, 3, 1, 1, 2, 2, 2, 3, 1, 3, 1, 4, 2, 3, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1, 2, 2, 2, 3, 2, 3, 2, 2 };
+            return moves[turn - 1];
         }
         
         public void PrintBoard()
@@ -74,7 +90,7 @@ namespace Royal.Model
             {
                 if (player_token[i] == -1)
                 {
-                    if (moves != 0 && player_board[player_token[i] + moves] != 1)
+                    if (player_board[player_token[i] + moves] != 1)
                     {
                         player_board[player_token[i] + moves] = 1;
                         player_token[i] += moves;
@@ -105,7 +121,8 @@ namespace Royal.Model
             {
                 if (player_token[i] == token)
                 {
-                    if (token + moves == 15)
+                    int token_moved = token + moves;
+                    if (token_moved == 14)
                     {
                         player_token[i] = -2;
                         player_board[token] = 0;
@@ -118,15 +135,18 @@ namespace Royal.Model
                             b_token_out += 1;
                         }
                         return true;
-                    } else if (token + moves < 15)
+                    } else if (token_moved < 14)
                     {
-                        if (player_board[token + moves] != 1)
+                        if (player_board[token_moved] != 1)
                         {
-                            player_token[i] = token + moves;
-                            player_board[token] = 0;
-                            player_board[player_token[i]] = 1;
-                            CheckRemoveToken(player, player_token[i]);
-                            return true;
+                            if (!IsRoseta((player == 1 ? 0 : 1), token_moved))
+                            {
+                                player_token[i] = token_moved;
+                                player_board[token] = 0;
+                                player_board[token_moved] = 1;
+                                CheckRemoveToken(player, player_token[i]);
+                                return true;
+                            }
                         }
                     }
                 }
@@ -140,16 +160,18 @@ namespace Royal.Model
          */
         public bool CheckRemoveToken(int player, int token)
         {
+            int[] player_token = player == 1 ? w_token_active : b_token_active; //token_active[(player == 1 ? 0 : 1)];
             int[] opposite_board = player == 1 ? w_path : b_path; // Inverted
             if (opposite_board[token] == 1)
             {
+                player_token[Array.IndexOf(player_token, token)] = -1;
                 opposite_board[token] = 0;
                 if (player == 0)
                 {
-                    w_token_total += 1;
+                    b_token_total += 1;
                 } else
                 {
-                    b_token_total += 1;
+                    w_token_total += 1;
                 }
                 return true;
             }
@@ -191,8 +213,22 @@ namespace Royal.Model
             return false;
         }
 
-        public int ChangeTurn()
+        private bool IsRoseta(int player, int token)
         {
+            int[] player_board = player == 1 ? b_path : w_path;
+            if (token == 3 || token == 7 || token == 13)
+            {
+                if (player_board[token] == 1)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int ChangeTurn() //talvez hay que cambiar esto
+        {
+            TurnCounter++;
             if (IsRoseta(player_turn))
             {
                 return player_turn;

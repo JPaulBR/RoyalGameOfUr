@@ -13,6 +13,7 @@ namespace Royal
 {
     class Machine
     {
+
         public int minimax(int depth, int nodeIndex, bool isMax,
             int[] scores, int h)
         {
@@ -38,15 +39,25 @@ namespace Royal
             return (n == 1) ? 0 : 1 + log2(n / 2);
         }
 
+        /******************/
+        int id;
+        int[] turnos;
+        int[] dados;
 
-        private void PrintBoard(int[][] board, int level, int player)
+
+        private void PrintBoard(int[][] board, int player, int[][] token_active, int[] token_total, int[] token_out, int level, int idnum, int root)
         {
             Console.WriteLine("#################");
+            Console.WriteLine("ID: " + idnum);
+            Console.WriteLine("Root: " + root);
             Console.WriteLine("Level: " + level);
             Console.WriteLine("Player: " + player);
-            Console.WriteLine("B: " + string.Join(" ", board[1]) + "\nW: " + string.Join(" ", board[0]));
+            Console.WriteLine("W: " + string.Join(" ", board[0]) + "\nB: " + string.Join(" ", board[1]));
+            Console.WriteLine("W: " + string.Join(" ", token_active[0]) + "\nB: " + string.Join(" ", token_active[1]));
+            Console.WriteLine("TOTAL:   W: " + token_total[0] + " B: " + token_total[1]);
+            Console.WriteLine("OUT:     W: " + token_out[0] + " B: " + token_out[1]);
             Console.WriteLine("#################");
-            WriteInJson(level, board[1], board[0], player, level);
+            WriteInJson(idnum, board[1], board[0], root, level);
         }
 
         public void MakeTree(int[][] board, int player)
@@ -58,99 +69,90 @@ namespace Royal
             token_active[1] = new int[7];
             token_active[0] = Enumerable.Repeat(-1, 7).ToArray();
             token_active[1] = Enumerable.Repeat(-1, 7).ToArray();
-            MakeTreeAuxiliar(player, board, token_active, token_total, token_out, 1, 1);
+
+            RandomGenerator random = new RandomGenerator();
+            int t = 300;
+            turnos = new int[t];
+            dados = new int[t];
+            for (int i = 1; i <= t; i++)
+            {
+                turnos[i - 1] = i;
+                int moves = random.Next(0, 2) + random.Next(0, 2) + random.Next(0, 2);
+                if (moves == 0)
+                {
+                    dados[i - 1] = 4;
+                }
+                else
+                {
+                    dados[i - 1] = moves;
+                }
+            }
+            Console.WriteLine(string.Join(" ", turnos));
+            Console.WriteLine(string.Join(" ", dados));
+
+            id = 0;
+            MakeTreeAuxiliar(player, board, token_active, token_total, token_out, 1, id, 0);
+
+            Console.WriteLine(string.Join(" ", turnos));
+            Console.WriteLine(string.Join(" ", dados));
+
         }
 
-        private void MakeTreeAuxiliar(int player, int[][] board, int[][] token_active, int[] token_total, int[] token_out, int level, int id)
+        private void MakeTreeAuxiliar(int player, int[][] board, int[][] token_active, int[] token_total, int[] token_out, int level, int idnum, int root)
         {
-            Random rnd = new Random();
-            List<int> iter1 = new List<int>();
-            iter1.Add(0); iter1.Add(1);
-            List<int> iter2 = new List<int>();
-            List<int> iter3 = new List<int>();
-            for (int e = 0; e <= 1; e++)
+            PrintBoard(board, player, token_active, token_total, token_out, level, idnum, root);
+            int new_root = idnum;
+            if (CheckWin(player, token_active))
             {
-                int count = rnd.Next(iter1.Count);
-                int rand1 = iter1.ElementAt(count);
-                iter1.RemoveAt(count);
-                switch (rand1)
+                // Condicion terminal
+                Console.WriteLine("++++++++ WINNER +++++++\n");
+                return;
+            }
+            int[][] copy = new int[2][]; copy[0] = new int[15]; copy[1] = new int[15];
+            Array.Copy(board[0], copy[0], 15); Array.Copy(board[1], copy[1], 15);
+            int[][] copy_token_active = new int[2][]; copy_token_active[0] = new int[7]; copy_token_active[1] = new int[7];
+            Array.Copy(token_active[0], copy_token_active[0], 7); Array.Copy(token_active[1], copy_token_active[1], 7);
+            int[] copy_token_total = new int[2];
+            Array.Copy(token_total, copy_token_total, 2);
+            int[] copy_token_out = new int[2];
+            Array.Copy(token_out, copy_token_out, 2);
+
+            List<int> tokens = Moveable(player, token_active);
+            foreach (int token in tokens)
+            {
+                bool[] replay = new bool[1];
+                if (MoveToken(player, copy, token, dados[level - 1], copy_token_active, copy_token_total, copy_token_out, replay))
                 {
-                    case 1:
-                        List<int> tokens = Moveable(player, token_active);
-                        foreach (int token in tokens)
-                        {
-                            iter2.Add(1); iter2.Add(2); iter2.Add(3); iter2.Add(4);
-                            for (int i = 1; i <= 4; i++)
-                            {
-                                int count2 = rnd.Next(iter2.Count);
-                                int rand2 = iter2.ElementAt(count2);
-                                iter2.RemoveAt(count2);
-                                bool replay = false;
-
-                                int[][] copy = new int[2][];
-                                copy[0] = new int[15]; copy[1] = new int[15];
-                                Array.Copy(board[0], copy[0], 15);
-                                Array.Copy(board[1], copy[1], 15);
-
-                                if (MoveToken(player, copy, token, rand2, token_active, token_total, token_out, replay))
-                                {
-                                    if (CheckWin(player, token_active))
-                                    {
-                                        // Condicion terminal
-                                        Console.WriteLine("++++++++ WINNER +++++++");
-                                        PrintBoard(copy, level, player);
-                                        return;
-                                    }
-                                    PrintBoard(copy, level, player);
-                                    if (replay) ///////
-                                    {
-                                        MakeTreeAuxiliar(player, copy, token_active, token_total, token_out, level + 1, id + 1);
-                                    }
-                                    else
-                                    {
-                                        MakeTreeAuxiliar((player == 1 ? 0 : 1), copy, token_active, token_total, token_out, level + 1, id + 1);
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case 0:
-                        iter3.Add(1); iter3.Add(2); iter3.Add(3); iter3.Add(4);
-                        for (int i = 1; i <= 4; i++)
-                        {
-                            int count2 = rnd.Next(iter3.Count);
-                            int rand2 = iter3.ElementAt(count2);
-                            iter3.RemoveAt(count2);
-
-                            int[][] copy = new int[2][];
-                            copy[0] = new int[15]; copy[1] = new int[15];
-                            Array.Copy(board[0], copy[0], 15);
-                            Array.Copy(board[1], copy[1], 15);
-
-                            if (MoveFirstToken(player, copy, rand2, token_active, token_total))
-                            {
-                                if (CheckWin(player, token_active))
-                                {
-                                    // Condicion terminal
-                                    Console.WriteLine("+++++++++++++++");
-                                    PrintBoard(copy, level, player);
-                                    return;
-                                }
-                                PrintBoard(copy, level, player);
-                                if (rand2 == 4)
-                                {
-                                    MakeTreeAuxiliar(player, copy, token_active, token_total, token_out, level + 1, id + 1);
-                                }
-                                else
-                                {
-                                    MakeTreeAuxiliar((player == 1 ? 0 : 1), copy, token_active, token_total, token_out, level + 1, id + 1);
-                                }
-                            }
-                        }
-                        break;
+                    //PrintBoard(copy, player, token_active, token_total, token_out, level, idnum, root);
+                    if (replay[0]) ///////
+                    {
+                        this.id++;
+                        MakeTreeAuxiliar(player, copy, copy_token_active, copy_token_total, copy_token_out, level + 1, id, new_root);
+                    }
+                    else
+                    {
+                        this.id++;
+                        MakeTreeAuxiliar((player == 1 ? 0 : 1), copy, copy_token_active, copy_token_total, copy_token_out, level + 1, id, new_root);
+                    }
+                }
+            }
+            if (MoveFirstToken(player, copy, dados[level - 1], copy_token_active, copy_token_total))
+            {
+                //PrintBoard(copy, player, token_active, token_total, token_out, level, idnum, root);
+                if (dados[level - 1] == 4)
+                {
+                    this.id++;
+                    MakeTreeAuxiliar(player, copy, copy_token_active, copy_token_total, copy_token_out, level + 1, id, new_root);
+                }
+                else
+                {
+                    this.id++;
+                    MakeTreeAuxiliar((player == 1 ? 0 : 1), copy, copy_token_active, copy_token_total, copy_token_out, level + 1, id, new_root);
                 }
             }
         }
+
+
 
         //
         private bool MoveFirstToken(int player, int[][] board, int moves, int[][] token_active, int[] token_total)
@@ -173,24 +175,24 @@ namespace Royal
             return false;
         }
 
-        private bool MoveToken(int player, int[][] board, int token, int moves, int[][] token_active, int[] token_total, int[] token_out, bool replay)
+        private bool MoveToken(int player, int[][] board, int token, int moves, int[][] token_active, int[] token_total, int[] token_out, bool[] replay)
         {
             int[] player_token = token_active[player];
             int[] player_board = board[player];
-            replay = false;
+            replay[0] = false;
             for (int i = 0; i < player_token.Length; i++)
             {
                 if (player_token[i] == token)
                 {
                     int token_moved = token + moves;
-                    if (token_moved == 15)
+                    if (token_moved == 14)
                     {
                         player_token[i] = -2;
                         player_board[token] = 0;
                         token_out[player] += 1;
                         return true;
                     }
-                    else if (token_moved < 15)
+                    else if (token_moved < 14)
                     {
                         if (player_board[token_moved] != 1)
                         {
@@ -201,7 +203,7 @@ namespace Royal
                                 player_board[token_moved] = 1;
                                 CheckRemoveToken(player, board, token_moved, token_total, token_active);
                                 if (IsRoseta(player, board, token_moved))
-                                    replay = true;
+                                    replay[0] = true;
                                 return true;
                             }
                         }
@@ -226,15 +228,15 @@ namespace Royal
 
         private bool CheckRemoveToken(int player, int[][] board, int token, int[] token_total, int[][] token_active)
         {
-            int[] player_token = token_active[player];
+            int[] player_token = token_active[(player == 1 ? 0 : 1)];
             int[] opposite_board = player == 1 ? board[0] : board[1]; // Inverted
             if (token > 3 && token != 8 && token != 12)
             {
                 if (opposite_board[token] == 1)
                 {
-                    player_token[Array.IndexOf(player_token, token)] = 0;
+                    player_token[Array.IndexOf(player_token, token)] = -1;
                     opposite_board[token] = 0;
-                    token_total[player] += 1;
+                    token_total[(player == 1 ? 0 : 1)] += 1;
                     return true;
                 }
             }
@@ -280,7 +282,7 @@ namespace Royal
         }
 
 
-        public List<dataJson> LoadJson()
+    public List<dataJson> LoadJson()
         {
             using (StreamReader r = new StreamReader(@"D:\Usuarios\gaboq\Escritorio\Gabo\jsonfile.json"))
             {

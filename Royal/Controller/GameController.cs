@@ -29,9 +29,9 @@ namespace Royal.Controller
             logic_board = new Board();
 
             int[] list = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            pc.WriteInJson(1, list, list, 1, 1); //is for write to the json file
+            //pc.WriteInJson(1, list, list, 1, 1); //is for write to the json file
             int[][] l = { logic_board.WhitePath, logic_board.BlackPath };
-            pc.MakeTree(l, logic_board.PlayerTurn);
+            //pc.MakeTree(l, logic_board.PlayerTurn);
 
             this.touchButton = 0;
             board = new Form1();
@@ -153,9 +153,6 @@ namespace Royal.Controller
 
         public void throwDice()
         {
-            Console.Out.WriteLine("###########################");
-            Console.WriteLine("###########################");
-            System.Diagnostics.Debug.WriteLine("###########################");
             Image[] resultList;
             int i = 0;
             while (i < 1)
