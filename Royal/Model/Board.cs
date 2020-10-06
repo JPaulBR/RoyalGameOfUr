@@ -12,8 +12,8 @@ namespace Royal.Model
     {
         private int[] b_path;
         private int[] w_path;
-        public int[] BlackPath { get => b_path; }
-        public int[] WhitePath { get => w_path; }
+        public int[] BlackPath { get => b_path; set => b_path = value; }
+        public int[] WhitePath { get => w_path; set => w_path = value; }
 
         private int b_token_total;
         private int w_token_total;

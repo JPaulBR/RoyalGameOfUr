@@ -26,7 +26,7 @@ namespace Royal.Controller
         private Button[] listButtonPc;
         private int IdActual;
         private Tree desitionTree;
-
+        private Model.TreeNode actualNode;
 
         public Form1 GameForm { get => board; set => board = value; }
 
@@ -60,6 +60,8 @@ namespace Royal.Controller
             {
                 tree.AddChild(node, items[i].id, items[i].root, items[i]);
             }
+            actualNode = tree.root;
+            desitionTree = tree;
             //tree.seeChildren(node); Imprimir todo el árbol
             //var r = tree.childrenList(node.Child[0].Child[2]); //Función que retorna todos los sucesores del padre
         }
@@ -253,9 +255,30 @@ namespace Royal.Controller
 
         private int nextPCTurn()
         {
-            /*
-             * 
-             */
+            Model.TreeNode intermedio = funcion(actualNode, logic_board.WhitePath, logic_board.BlackPath); //aqui va la funcion
+            int highest = -8;
+            int index = -1;
+            int counter;
+            for (int i = 0; i < intermedio.Child.Length; i++)
+            {
+                counter = Math.Max(highest, intermedio.Child[i].Value);
+                if (counter > highest)
+                {
+                    index = i;
+                    highest = counter;
+                }
+            }
+            if(highest != -8)
+            {
+                actualNode = intermedio.Child[index];
+                logic_board.BlackPath = actualNode.ContaintData.array2;
+                logic_board.BlackTotal = actualNode.ContaintData.initialH;
+                logic_board.BlackOut = actualNode.ContaintData.finalH;
+                logic_board.WhitePath = actualNode.ContaintData.array1;
+                logic_board.WhiteTotal = actualNode.ContaintData.initialM;
+                logic_board.WhiteOut = actualNode.ContaintData.finalM;
+            }
+
             logic_board.ChangeTurn();
             updateCount();
             refreshButtons();
