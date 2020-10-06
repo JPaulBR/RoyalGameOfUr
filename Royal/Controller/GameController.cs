@@ -38,8 +38,8 @@ namespace Royal.Controller
 
             IdActual = 0;
             LoadTree2();
-            //pc.Calcminimax(desitionTree, logic_board.PlayerTurn);
-
+            pc.Calcminimax(desitionTree, logic_board.PlayerTurn);
+            actualNode = desitionTree.root;
             this.touchButton = 0;
             board = new Form1();
             logicGame = new LogicGame();
@@ -93,7 +93,7 @@ namespace Royal.Controller
             }
             actualNode = tree.root;
             desitionTree = tree;
-            desitionTree.seeChildren(tree.root);
+            //desitionTree.seeChildren(tree.root);
         }
 
         public void init(){
@@ -284,6 +284,20 @@ namespace Royal.Controller
 
         private int nextPCTurn()
         {
+            if (logic_board.TurnCounterData == 1)
+            {
+                logic_board.BlackPath = actualNode.ContaintData.array2;
+                logic_board.BlackTotal = actualNode.ContaintData.initialH;
+                logic_board.BlackOut = actualNode.ContaintData.finalH;
+                logic_board.WhitePath = actualNode.ContaintData.array1;
+                logic_board.WhiteTotal = actualNode.ContaintData.initialM;
+                logic_board.WhiteOut = actualNode.ContaintData.finalM;
+                logic_board.PrintBoard();
+                logic_board.ChangeTurn();
+                updateCount();
+                refreshButtons();
+                return 0;
+            }
             Model.TreeNode intermedio = getMovementForChild(actualNode, logic_board.WhitePath, logic_board.BlackPath); //aqui va la funcion
             int highest = -8;
             int index = -1;
@@ -301,11 +315,11 @@ namespace Royal.Controller
             {
                 actualNode = intermedio.Child[index];
                 logic_board.BlackPath = actualNode.ContaintData.array2;
-                //logic_board.BlackTotal = actualNode.ContaintData.initialH;
-                //logic_board.BlackOut = actualNode.ContaintData.finalH;
+                logic_board.BlackTotal = actualNode.ContaintData.initialH;
+                logic_board.BlackOut = actualNode.ContaintData.finalH;
                 logic_board.WhitePath = actualNode.ContaintData.array1;
-                //logic_board.WhiteTotal = actualNode.ContaintData.initialM;
-                //logic_board.WhiteOut = actualNode.ContaintData.finalM;
+                logic_board.WhiteTotal = actualNode.ContaintData.initialM;
+                logic_board.WhiteOut = actualNode.ContaintData.finalM;
             }
 
             logic_board.ChangeTurn();
@@ -352,11 +366,7 @@ namespace Royal.Controller
 
         private void FichaB_Click(object sender, EventArgs e)
         {
-            this.touchButton = 1;
-            //Logic
-            logic_board.MoveFirstToken(0, logicGame.getStepsCount());
-            logic_board.PrintBoard();
-            updateCount();
+
         }
 
         public void buttonBlack0_Click(object sender, EventArgs e)

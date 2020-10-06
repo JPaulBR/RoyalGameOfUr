@@ -130,7 +130,6 @@ namespace Royal
         int[] turnos;
         int[] dados;
 
-
         private void PrintBoard(int[][] board, int player, int[][] token_active, int[] token_total, int[] token_out, int level, int idnum, int root)
         {
             Console.WriteLine("#################");
@@ -371,7 +370,8 @@ namespace Royal
 
         public List<dataJson> LoadJson()
         {
-            using (StreamReader r = new StreamReader(@"C:\Users\Jean Paul\Downloads\jsonfileA.json"))
+            //using (StreamReader r = new StreamReader(@"C:\Users\Jean Paul\Downloads\jsonfileA.json"))
+            using (StreamReader r = new StreamReader(@"D:\Usuarios\gaboq\Escritorio\Gabo\jsonfile.json"))
             {
                 string json = r.ReadToEnd();
                 List<dataJson> items = JsonConvert.DeserializeObject<List<dataJson>>(json);
