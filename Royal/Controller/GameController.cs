@@ -255,7 +255,7 @@ namespace Royal.Controller
 
         private int nextPCTurn()
         {
-            Model.TreeNode intermedio = funcion(actualNode, logic_board.WhitePath, logic_board.BlackPath); //aqui va la funcion
+            Model.TreeNode intermedio = getMovementForChild(actualNode, logic_board.WhitePath, logic_board.BlackPath); //aqui va la funcion
             int highest = -8;
             int index = -1;
             int counter;
@@ -283,6 +283,30 @@ namespace Royal.Controller
             updateCount();
             refreshButtons();
             return 0;
+        }
+
+	public static TreeNode getMovementForChild(TreeNode node,int[] arrayPc, int[] arrayHm) {
+            TreeNode result=null;
+            for (int i=0; i< node.NoChildren; i++) {
+                bool verifyPc = isArrayEqual(node.Child[i].ContaintData.array1, arrayPc);
+                bool verifyHm = isArrayEqual(node.Child[i].ContaintData.array2, arrayHm);
+                if (verifyPc && verifyHm)
+                {
+                    result = node.Child[i];
+                    break;
+                }
+            }
+            return result;
+        }
+
+        public static bool isArrayEqual(int[] arrayA, int[] arrayB) {
+            for (int i = 0; i < arrayA.Length; i++) { 
+                if (arrayA[i] != arrayB[i])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void FichaA_Click(object sender, EventArgs e)
