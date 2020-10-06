@@ -39,7 +39,8 @@ namespace Royal.Model
         {
             b_path = Enumerable.Repeat(0, 15).ToArray();
             w_path = Enumerable.Repeat(0, 15).ToArray();
-            player_turn = new Random().Next(2);
+            //player_turn = new Random().Next(2);
+            player_turn = 0;
             b_token_total = total;
             w_token_total = total;
             b_token_out = 0;

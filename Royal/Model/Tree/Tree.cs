@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static Royal.Machine;
 
 namespace Royal.Model.Tree
 {
@@ -8,9 +9,9 @@ namespace Royal.Model.Tree
     {
         public TreeNode root;
 
-        public TreeNode insertRoot(int data)
+        public TreeNode insertRoot(int data, dataJson containt)
         {
-            root = new TreeNode(data);
+            root = new TreeNode(data, containt);
             return root;
         }
 
@@ -59,9 +60,9 @@ namespace Royal.Model.Tree
             return id_numbers;
         }
 
-        public void AddChild(TreeNode pNode, int data, int father)
+        public void AddChild(TreeNode pNode, int data, int father, dataJson containt)
         {
-            TreeNode nNode = new TreeNode(data);
+            TreeNode nNode = new TreeNode(data, containt);
             if (pNode.Data == father)
             {
                 pNode.incrementChild(nNode);
@@ -76,10 +77,31 @@ namespace Royal.Model.Tree
                     }
                     else
                     {
-                        AddChild(pNode.Child[i], data, father);
+                        AddChild(pNode.Child[i], data, father, containt);
                     }
                 }
             }
+        }
+
+        public static List<dataJson> orderList(List<dataJson> list)
+        {
+            dataJson temp;
+            for (int j = 0; j <= list.Count - 2; j++)
+            {
+                for (int i = 0; i <= list.Count - 2; i++)
+                {
+                    if (list[i].root > list[i + 1].root)
+                    {
+                        temp = list[i + 1];
+                        list[i + 1] = list[i];
+                        list[i] = temp;
+                    }
+                }
+            }
+            /*foreach (dataJson i in list) {
+                Console.WriteLine(i.id + " " + i.root+ "pc: "+string.Join(" ",i.array1)+ " human"+ string.Join(" ", i.array2));
+            }*/
+            return list;
         }
 
     }

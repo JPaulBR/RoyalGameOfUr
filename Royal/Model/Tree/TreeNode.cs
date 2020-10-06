@@ -8,21 +8,35 @@ namespace Royal.Model
     class TreeNode
     {
         private int data;
-        int noChildren;
+        private int valueUtility;
+        private int noChildren;
         private TreeNode[] child;
         private TreeNode[] children;
-        dataJson containt;
+        private dataJson containt;
         public dataJson ContaintData { get => containt; set => containt = value; }
         public int Value { get; set; }
         public int Data { get => data; set => data = value; }
         public int NoChildren { get => noChildren; set => noChildren = value; }
         public TreeNode[] Child { get => child; set => child = value; }
-        public TreeNode[] Children { get => children; set => children = value; }
 
-        public TreeNode(int data)
+        public TreeNode(int data, dataJson containt)
         {
             this.data = data;
             this.noChildren = 0;
+            this.containt = containt;
+            this.valueUtility = -1;
+        }
+
+        public bool isLeaf(TreeNode node)
+        {
+            if (node.NoChildren > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public void copyChildren()
@@ -52,7 +66,7 @@ namespace Royal.Model
             int cont = 0;
             foreach (int i in array)
             {
-                if (i == 0)
+                if (i == 1)
                 {
                     cont++;
                 }
@@ -63,10 +77,10 @@ namespace Royal.Model
         public int calculateFunction(int initial, int inRow, bool isPc)
         {
             int result = 0;
-            int dicesOnTable = DicesOnTable(containt.array1);
+            int dicesOnTable = DicesOnTable(containt.array2);
             if (isPc)
             {
-                dicesOnTable = DicesOnTable(containt.array2);
+                dicesOnTable = DicesOnTable(containt.array1);
             }
             result = dicesOnTable - initial + 2 * inRow;
             return result;

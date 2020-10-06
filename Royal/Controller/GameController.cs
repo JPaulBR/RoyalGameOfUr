@@ -1,7 +1,10 @@
-﻿using Royal.Model;
+﻿using Newtonsoft.Json;
+using Royal.Model;
+using Royal.Model.Tree;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,12 +18,15 @@ namespace Royal.Controller
         private Board logic_board;
         private Form1 board;
         private LogicGame logicGame;
-        Machine pc = new Machine();
-        int touchButton;
-        int tokenInitial;
-        int steps;//movements by tokens 
-        Button[] listButtonHuman;
-        Button[] listButtonPc;
+        private Machine pc = new Machine();
+        private int touchButton;
+        private int tokenInitial;
+        private int steps;//movements by tokens 
+        private Button[] listButtonHuman;
+        private Button[] listButtonPc;
+        private int IdActual;
+        private Tree desitionTree;
+
 
         public Form1 GameForm { get => board; set => board = value; }
 
@@ -28,10 +34,9 @@ namespace Royal.Controller
         {
             logic_board = new Board();
 
-            int[] list = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            //pc.WriteInJson(1, list, list, 1, 1); //is for write to the json file
-            int[][] l = { logic_board.WhitePath, logic_board.BlackPath };
-            //pc.MakeTree(l, logic_board.PlayerTurn);
+            IdActual = 0;
+            LoadTree();
+            pc.Calcminimax(desitionTree, logic_board.PlayerTurn);
 
             this.touchButton = 0;
             board = new Form1();
@@ -42,6 +47,21 @@ namespace Royal.Controller
                 throwDice();
                 nextPCTurn();
             }
+        }
+
+        private void LoadTree()
+        {
+            List<dataJson> items = pc.LoadJson();
+            items = Tree.orderList(items);
+            Tree tree = new Tree();
+            Model.TreeNode node = tree.insertRoot(items[1].id, items[1]);
+            tree.root.printNode();
+            for (int i = 2; i < items.Count; i++)
+            {
+                tree.AddChild(node, items[i].id, items[i].root, items[i]);
+            }
+            //tree.seeChildren(node); Imprimir todo el árbol
+            //var r = tree.childrenList(node.Child[0].Child[2]); //Función que retorna todos los sucesores del padre
         }
 
         public void init()
@@ -164,10 +184,11 @@ namespace Royal.Controller
                 Thread.Sleep(500);
                 i++;
             }
-            this.steps = logicGame.getStepsCount();
+            /*this.steps = logicGame.getStepsCount();
             if (this.steps == 0) {
                 this.steps = 3;
-            }
+            }*/
+            this.steps = logic_board.GetMove(logic_board.TurnCounter);
             MessageBox.Show("Avanza " + this.steps);
         }
 
@@ -232,6 +253,9 @@ namespace Royal.Controller
 
         private int nextPCTurn()
         {
+            /*
+             * 
+             */
             logic_board.ChangeTurn();
             updateCount();
             refreshButtons();

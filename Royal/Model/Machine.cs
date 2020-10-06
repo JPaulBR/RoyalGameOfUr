@@ -8,12 +8,13 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using Royal.Model.Tree;
+using System.Media;
 
 namespace Royal
 {
     class Machine
     {
-
         public int minimax(int depth, int nodeIndex, bool isMax,
             int[] scores, int h)
         {
@@ -39,6 +40,115 @@ namespace Royal
             return (n == 1) ? 0 : 1 + log2(n / 2);
         }
 
+        public int Calcminimax(Tree desitionTree, int turn)
+        {
+            return Minimax(desitionTree.root, (turn==0?true:false));
+        }
+
+        private int Minimax(Model.TreeNode node, bool isMax)
+        {
+            if (node.isLeaf(node))
+            {
+                return node.getFunctionResult(node.ContaintData.initialH, node.ContaintData.initialM, node.ContaintData.finalH, node.ContaintData.finalM);
+            }
+            switch(node.Child.Length)
+            {
+                case 1:
+                    if (isMax) {
+                        node.Value = Math.Max(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false), -8);
+                    } else {
+                        node.Value = Math.Min(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false), 15);
+                    }
+                    return node.Value;
+                case 2:
+                    if (isMax) {
+                        node.Value = Math.Max(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false));
+                    } else {
+                        node.Value = Math.Min(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false));
+                    }
+                    return node.Value;
+                case 3:
+                    if (isMax) {
+                        node.Value = Math.Max(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false)));
+
+                    } else {
+                        node.Value = Math.Min(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false)));
+                    }
+                    return node.Value;
+                case 4:
+                    if (isMax) { 
+                        node.Value = Math.Max(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[3], node.Child[3].ContaintData.playerTurn == 0 ? true : false))));
+                    } else {
+                        node.Value = Math.Min(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[3], node.Child[3].ContaintData.playerTurn == 0 ? true : false))));
+                    }
+                    return node.Value;
+                case 5:
+                    if (isMax) {
+                        node.Value = Math.Max(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[3], node.Child[3].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[4], node.Child[4].ContaintData.playerTurn == 0 ? true : false)))));
+                    } else {
+                        node.Value = Math.Min(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[3], node.Child[3].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[4], node.Child[4].ContaintData.playerTurn == 0 ? true : false)))));
+                    }
+                    return node.Value;
+                case 6:
+                    if (isMax) {
+                        node.Value = Math.Max(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[3], node.Child[3].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[4], node.Child[4].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[5], node.Child[5].ContaintData.playerTurn == 0 ? true : false))))));
+                    } else {
+                        node.Value = Math.Min(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[3], node.Child[3].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[4], node.Child[4].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[5], node.Child[5].ContaintData.playerTurn == 0 ? true : false))))));
+                    }
+                    return node.Value;
+                default:
+                    if (isMax) {
+                        node.Value = Math.Max(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[3], node.Child[3].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[4], node.Child[4].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Max(Minimax(node.Child[5], node.Child[5].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[6], node.Child[6].ContaintData.playerTurn == 0 ? true : false)))))));
+                    } else {
+                        node.Value = Math.Min(Minimax(node.Child[0], node.Child[0].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[1], node.Child[1].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[2], node.Child[2].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[3], node.Child[3].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[4], node.Child[4].ContaintData.playerTurn == 0 ? true : false),
+                            Math.Min(Minimax(node.Child[5], node.Child[5].ContaintData.playerTurn == 0 ? true : false),
+                            Minimax(node.Child[6], node.Child[6].ContaintData.playerTurn == 0 ? true : false)))))));
+                    }
+                    return node.Value;
+            }
+        }
+
+
         /******************/
         int id;
         int[] turnos;
@@ -57,7 +167,7 @@ namespace Royal
             Console.WriteLine("TOTAL:   W: " + token_total[0] + " B: " + token_total[1]);
             Console.WriteLine("OUT:     W: " + token_out[0] + " B: " + token_out[1]);
             Console.WriteLine("#################");
-            WriteInJson(idnum, board[1], board[0], root, level);
+            WriteInJson(idnum, board[0], board[1], root, level, token_total[player], token_out[player], token_total[(player==1?0:1)], token_out[(player == 1 ? 0 : 1)], player);
         }
 
         public void MakeTree(int[][] board, int player)
@@ -87,13 +197,14 @@ namespace Royal
                     dados[i - 1] = moves;
                 }
             }
-            Console.WriteLine(string.Join(" ", turnos));
-            Console.WriteLine(string.Join(" ", dados));
+            using (StreamWriter file = File.CreateText(@"D:\Usuarios\gaboq\Escritorio\Gabo\dados.txt"))
+            {
+                file.WriteLine(string.Join(" ", dados));
+            }
 
             id = 0;
             MakeTreeAuxiliar(player, board, token_active, token_total, token_out, 1, id, 0);
 
-            Console.WriteLine(string.Join(" ", turnos));
             Console.WriteLine(string.Join(" ", dados));
 
         }
@@ -282,7 +393,7 @@ namespace Royal
         }
 
 
-    public List<dataJson> LoadJson()
+        public List<dataJson> LoadJson()
         {
             using (StreamReader r = new StreamReader(@"D:\Usuarios\gaboq\Escritorio\Gabo\jsonfile.json"))
             {
@@ -292,7 +403,7 @@ namespace Royal
             }
         }
 
-        public void WriteInJson(int id,int[] arr1,int[] arr2,int root,int level) {
+        public void WriteInJson(int id,int[] arr1,int[] arr2,int root,int level, int initialh, int finalh, int initialm, int finalm, int player) {
             List<dataJson> items = LoadJson();
             if (items == null) {
                 items = new List<dataJson>();
@@ -303,7 +414,12 @@ namespace Royal
                 array1 = arr1,
                 array2 = arr2,
                 root = root,
-                level = level
+                level = level,
+                initialH = initialh,
+                finalH = finalh,
+                initialM = initialm,
+                finalM = finalm,
+                playerTurn = player
             });
             //open file stream
             using (StreamWriter file = File.CreateText(@"D:\Usuarios\gaboq\Escritorio\Gabo\jsonfile.json"))
@@ -321,28 +437,12 @@ namespace Royal
             public int[] array2 { get; set; }
             public int root { get; set; }
             public int level { get; set; }
+            public int playerTurn { get; set; }
+            public int initialH { get; set; }
+            public int initialM { get; set; }
+            public int finalH { get; set; }
+            public int finalM { get; set; }
 
-            /*private int id;
-            private int[] array1 = new int [15];
-            private int[] array2 = new int[15];
-            private int root;
-            private int level;
-
-            public dataJson(int id,int[] array1,int[] array2,int root,int level) {
-                this.id = id;
-                this.array1 = array1;
-                this.array2 = array2;
-                this.root = root;
-                this.level = level;
-            }
-
-            public int getId() {
-                return this.id;
-            }
-
-            public int[] getArray1() {
-                return this.array1;
-            }*/
         }
 
     }
