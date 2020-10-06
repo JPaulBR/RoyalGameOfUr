@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using static Royal.Machine;
+using Royal.Model;
+using Royal.Model.Tree;
 
 namespace Royal.Controller
 {
@@ -35,8 +37,8 @@ namespace Royal.Controller
             logic_board = new Board();
 
             IdActual = 0;
-            LoadTree();
-            pc.Calcminimax(desitionTree, logic_board.PlayerTurn);
+            LoadTree2();
+            //pc.Calcminimax(desitionTree, logic_board.PlayerTurn);
 
             this.touchButton = 0;
             board = new Form1();
@@ -52,11 +54,11 @@ namespace Royal.Controller
         private void LoadTree()
         {
             List<dataJson> items = pc.LoadJson();
-            items = Tree.orderList(items);
+            List<dataJson> sorted = items.OrderBy(o => o.root).ToList();
             Tree tree = new Tree();
-            Model.TreeNode node = tree.insertRoot(items[1].id, items[1]);
+            Model.TreeNode node = tree.insertRoot(items[0].id, items[0]);
             tree.root.printNode();
-            for (int i = 2; i < items.Count; i++)
+            for (int i = 1; i < items.Count; i++)
             {
                 tree.AddChild(node, items[i].id, items[i].root, items[i]);
             }
@@ -66,8 +68,35 @@ namespace Royal.Controller
             //var r = tree.childrenList(node.Child[0].Child[2]); //Función que retorna todos los sucesores del padre
         }
 
-        public void init()
+        private void LoadTree2()
         {
+            List<dataJson> items = pc.LoadJson();
+            List<dataJson> sorted = items.OrderBy(o => o.root).ToList();
+            List<Model.TreeNode> nodes = new List<Model.TreeNode>();
+            for (int i = 0; i < sorted.Count; i++)
+            {
+                Model.TreeNode nNode = new Model.TreeNode(sorted[i].id, sorted[i]);
+                nodes.Add(nNode);
+            }
+            Tree tree = new Tree();
+            Model.TreeNode node = tree.insertRoot(nodes[0]);
+            tree.root.printNode();
+            for (int i = 0; i < sorted.Count; i++)
+            {
+                for (int e = 0; e < sorted.Count; e++)
+                {
+                    if (sorted[e].root == sorted[i].id && sorted[e].id != sorted[i].id)
+                    {
+                        nodes[i].incrementChild(nodes[e]);
+                    }
+                }
+            }
+            actualNode = tree.root;
+            desitionTree = tree;
+            desitionTree.seeChildren(tree.root);
+        }
+
+        public void init(){
             this.board.FichaA.Click += new System.EventHandler(this.FichaA_Click);
             this.board.FichaB.Click += new System.EventHandler(this.FichaB_Click);
             this.board.H1.Click += new System.EventHandler(this.buttonBlack0_Click);
@@ -190,7 +219,7 @@ namespace Royal.Controller
             if (this.steps == 0) {
                 this.steps = 3;
             }*/
-            this.steps = logic_board.GetMove(logic_board.TurnCounter);
+            this.steps = logic_board.GetMove(logic_board.TurnCounterData);
             MessageBox.Show("Avanza " + this.steps);
         }
 
@@ -272,11 +301,11 @@ namespace Royal.Controller
             {
                 actualNode = intermedio.Child[index];
                 logic_board.BlackPath = actualNode.ContaintData.array2;
-                logic_board.BlackTotal = actualNode.ContaintData.initialH;
-                logic_board.BlackOut = actualNode.ContaintData.finalH;
+                //logic_board.BlackTotal = actualNode.ContaintData.initialH;
+                //logic_board.BlackOut = actualNode.ContaintData.finalH;
                 logic_board.WhitePath = actualNode.ContaintData.array1;
-                logic_board.WhiteTotal = actualNode.ContaintData.initialM;
-                logic_board.WhiteOut = actualNode.ContaintData.finalM;
+                //logic_board.WhiteTotal = actualNode.ContaintData.initialM;
+                //logic_board.WhiteOut = actualNode.ContaintData.finalM;
             }
 
             logic_board.ChangeTurn();
@@ -285,8 +314,8 @@ namespace Royal.Controller
             return 0;
         }
 
-	public static TreeNode getMovementForChild(TreeNode node,int[] arrayPc, int[] arrayHm) {
-            TreeNode result=null;
+	public static Model.TreeNode getMovementForChild(Model.TreeNode node,int[] arrayPc, int[] arrayHm) {
+            Model.TreeNode result=null;
             for (int i=0; i< node.NoChildren; i++) {
                 bool verifyPc = isArrayEqual(node.Child[i].ContaintData.array1, arrayPc);
                 bool verifyHm = isArrayEqual(node.Child[i].ContaintData.array2, arrayHm);

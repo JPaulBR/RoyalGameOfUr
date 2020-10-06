@@ -15,11 +15,16 @@ namespace Royal.Model.Tree
             return root;
         }
 
+        public TreeNode insertRoot(TreeNode containt)
+        {
+            root = containt;
+            return root;
+        }
+
         public void seeChildren(TreeNode node)
         {
             for (int i = 0; i < node.NoChildren; i++)
             {
-                //Console.WriteLine(node.Child[i].Data);
                 if (node.Child[i].NoChildren > 0)
                 {
                     foreach (TreeNode j in node.Child[i].Child)
@@ -98,9 +103,6 @@ namespace Royal.Model.Tree
                     }
                 }
             }
-            /*foreach (dataJson i in list) {
-                Console.WriteLine(i.id + " " + i.root+ "pc: "+string.Join(" ",i.array1)+ " human"+ string.Join(" ", i.array2));
-            }*/
             return list;
         }
 

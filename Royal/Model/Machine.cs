@@ -16,12 +16,12 @@ namespace Royal
     class Machine
     {
 
-        public int Calcminimax(Tree desitionTree, int turn)
+        /*public int Calcminimax(Tree desitionTree, int turn)
         {
             return Minimax(desitionTree.root, (turn==0?true:false));
-        }
+        }*/
 
-        private int Minimax(Model.TreeNode node, bool isMax)
+        /*private int Minimax(Model.TreeNode node, bool isMax)
         {
             if (node.isLeaf(node))
             {
@@ -122,7 +122,7 @@ namespace Royal
                     }
                     return node.Value;
             }
-        }
+        }*/
 
 
         /******************/
@@ -371,7 +371,7 @@ namespace Royal
 
         public List<dataJson> LoadJson()
         {
-            using (StreamReader r = new StreamReader(@"D:\Usuarios\gaboq\Escritorio\Gabo\jsonfile.json"))
+            using (StreamReader r = new StreamReader(@"C:\Users\Jean Paul\Downloads\jsonfileD.json"))
             {
                 string json = r.ReadToEnd();
                 List<dataJson> items = JsonConvert.DeserializeObject<List<dataJson>>(json);
@@ -390,15 +390,15 @@ namespace Royal
                 array1 = arr1,
                 array2 = arr2,
                 root = root,
-                level = level,
-                initialH = initialh,
+                level = level
+                /*initialH = initialh,
                 finalH = finalh,
                 initialM = initialm,
                 finalM = finalm,
-                playerTurn = player
+                playerTurn = player*/
             });
             //open file stream
-            using (StreamWriter file = File.CreateText(@"D:\Usuarios\gaboq\Escritorio\Gabo\jsonfile.json"))
+            using (StreamWriter file = File.CreateText(@"C:\Users\Jean Paul\Downloads\jsonfileD.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 //serialize object directly into file stream
@@ -413,11 +413,6 @@ namespace Royal
             public int[] array2 { get; set; }
             public int root { get; set; }
             public int level { get; set; }
-            public int playerTurn { get; set; }
-            public int initialH { get; set; }
-            public int initialM { get; set; }
-            public int finalH { get; set; }
-            public int finalM { get; set; }
 
         }
 

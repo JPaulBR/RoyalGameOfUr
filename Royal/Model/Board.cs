@@ -29,9 +29,9 @@ namespace Royal.Model
         int[] w_token_active;
 
         int player_turn;
+        int TurnCounter;
 
-
-        public int TurnCounter { get => TurnCounter; set => TurnCounter = value; }
+        public int TurnCounterData { get => TurnCounter; set => TurnCounter = value; }
 
         public int PlayerTurn { get => player_turn; set => player_turn = value; }
 
