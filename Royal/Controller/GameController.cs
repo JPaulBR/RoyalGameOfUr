@@ -29,12 +29,14 @@ namespace Royal.Controller
         private Tree desitionTree;
         private Model.TreeNode actualNode;
         private bool humanRoseta;
+        private int humanRosetaCounter;
         private bool pcRoseta;
         public Form1 GameForm { get => board; set => board = value; }
 
         public GameController()
         {
             logic_board = new Board();
+            humanRosetaCounter = -1;
             humanRoseta = false;
             pcRoseta = false;
             IdActual = 0;
@@ -269,24 +271,33 @@ namespace Royal.Controller
                         {
                             movements = logic_board.MoveToken(player, index - this.steps, this.steps);
                         }
-                        if (logic_board.CheckWin(player))
+                        if (movements)
                         {
-                            return true;
-                        }
-                        logic_board.ChangeTurn();
-                        logic_board.PrintBoard();
-                        updateCount();
-                        updateBoard(1);
-                        refreshButtons(logic_board.BlackPath, 1);
-                        //
-                        if (logic_board.PlayerTurn == 0)
-                        {
-                            humanRoseta = false;
-                            throwDice();
-                            nextPCTurn();
-                        } else
-                        {
-                            humanRoseta = true;
+                            if (logic_board.CheckWin(player))
+                            {
+                                return true;
+                            }
+                            logic_board.ChangeTurn();
+                            logic_board.PrintBoard();
+                            updateCount();
+                            updateBoard(1);
+                            refreshButtons(logic_board.BlackPath, 1);
+                            //
+                            if (index == 3 || index == 7 || index == 13)
+                            {
+                                humanRoseta = true;
+                                humanRosetaCounter++;
+                            }
+                            else
+                            {
+                                humanRoseta = false;
+                                humanRosetaCounter = 0;
+                            }
+                            if (logic_board.PlayerTurn == 0)
+                            {
+                                throwDice();
+                                nextPCTurn();
+                            }
                         }
                     }
                 }
@@ -301,6 +312,7 @@ namespace Royal.Controller
                 Array.Copy(actualNode.ContaintData.array2, logic_board.BlackPath, 15);
                 logic_board.BlackTotal = actualNode.ContaintData.initialH;
                 logic_board.BlackOut = actualNode.ContaintData.finalH;
+                logic_board.LastMovedToken = pc.compareArrays(logic_board.WhitePath, actualNode.ContaintData.array1);
                 Array.Copy(actualNode.ContaintData.array1, logic_board.WhitePath, 15);
                 logic_board.WhiteTotal = actualNode.ContaintData.initialM;
                 logic_board.WhiteOut = actualNode.ContaintData.finalM;
@@ -315,12 +327,26 @@ namespace Royal.Controller
             }
             Model.TreeNode intermedio = null;
             if (humanRoseta)
-            {   //falta
-                foreach (Model.TreeNode t in actualNode.Child)
+            {
+                if (humanRosetaCounter == 1)
                 {
-                    intermedio = getMovementForChild(t, logic_board.WhitePath, logic_board.BlackPath);
-                    if (intermedio != null)
-                        break;
+                    foreach (Model.TreeNode t in actualNode.Child)
+                    {
+                        intermedio = getMovementForChild(t, logic_board.WhitePath, logic_board.BlackPath);
+                        if (intermedio != null)
+                            break;
+                    }
+                } else if (humanRosetaCounter == 2)
+                {
+                    foreach (Model.TreeNode t1 in actualNode.Child)
+                    {
+                        foreach (Model.TreeNode t2 in t1.Child)
+                        {
+                            intermedio = getMovementForChild(t2, logic_board.WhitePath, logic_board.BlackPath);
+                            if (intermedio != null)
+                                break;
+                        }
+                    }
                 }
             } else if (pcRoseta) 
             {
@@ -352,6 +378,7 @@ namespace Royal.Controller
                 Array.Copy(actualNode.ContaintData.array2, logic_board.BlackPath, 15);
                 logic_board.BlackTotal = actualNode.ContaintData.initialH;
                 logic_board.BlackOut = actualNode.ContaintData.finalH;
+                logic_board.LastMovedToken = pc.compareArrays(logic_board.WhitePath, actualNode.ContaintData.array1);
                 Array.Copy(actualNode.ContaintData.array1, logic_board.WhitePath, 15);
                 logic_board.WhiteTotal = actualNode.ContaintData.initialM;
                 logic_board.WhiteOut = actualNode.ContaintData.finalM;

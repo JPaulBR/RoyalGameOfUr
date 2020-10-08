@@ -16,6 +16,19 @@ namespace Royal
     class Machine
     {
 
+        public int compareArrays(int[] pastArray, int[] actualArray)
+        {
+            int index = 0;
+            for (int i = 0; i < pastArray.Length; i++)
+            {
+                if (pastArray[i] != actualArray[i])
+                {
+                    index = i;
+                }
+            }
+            return index;
+        }
+
         public int Calcminimax(Tree desitionTree, int turn)
         {
             return Minimax(desitionTree.root, (turn==0?true:false));

@@ -164,7 +164,7 @@ namespace Royal.Model
                     {
                         if (player_board[token_moved] != 1)
                         {
-                            if (!IsRoseta((player == 1 ? 0 : 1), token_moved))
+                            if (!IsRosetaRemove((player == 1 ? 0 : 1), token_moved))
                             {
                                 player_token[i] = token_moved;
                                 player_board[token] = 0;
@@ -229,12 +229,15 @@ namespace Royal.Model
             return true;
         }
 
-        public bool IsRoseta(int player)
+        private bool IsRosetaRemove(int player, int token)
         {
             int[] player_board = player == 1 ? b_path : w_path;
-            if (player_board[3] == 1 || player_board[7] == 1 || player_board[11] == 1)
+            if (token == 7 || token == 13)
             {
-                return true;
+                if (player_board[token] == 1)
+                {
+                    return true;
+                }
             }
             return false;
         }
