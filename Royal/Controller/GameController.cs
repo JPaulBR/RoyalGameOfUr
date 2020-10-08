@@ -36,7 +36,7 @@ namespace Royal.Controller
         public GameController()
         {
             logic_board = new Board();
-            humanRosetaCounter = -1;
+            humanRosetaCounter = 0;
             humanRoseta = false;
             pcRoseta = false;
             IdActual = 0;
@@ -288,11 +288,6 @@ namespace Royal.Controller
                                 humanRoseta = true;
                                 humanRosetaCounter++;
                             }
-                            else
-                            {
-                                humanRoseta = false;
-                                humanRosetaCounter = 0;
-                            }
                             if (logic_board.PlayerTurn == 0)
                             {
                                 throwDice();
@@ -348,6 +343,8 @@ namespace Royal.Controller
                         }
                     }
                 }
+                humanRoseta = false;
+                humanRosetaCounter = 0;
             } else if (pcRoseta) 
             {
                 intermedio = actualNode;

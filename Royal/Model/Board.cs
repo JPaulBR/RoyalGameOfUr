@@ -98,7 +98,8 @@ namespace Royal.Model
                     result.Add(i);
                 }
             }
-            for (int i = 0; i < (7-result.Count); i++)
+            int size = 7 - result.Count;
+            for (int i = 0; i < (size); i++)
             {
                     result.Add(-1);
             }
@@ -188,18 +189,22 @@ namespace Royal.Model
         {
             int[] player_token = player == 1 ? w_token_active : b_token_active; //token_active[(player == 1 ? 0 : 1)];
             int[] opposite_board = player == 1 ? w_path : b_path; // Inverted
-            if (opposite_board[token] == 1)
+            if (token > 3 && token != 7 && token != 13)
             {
-                player_token[Array.IndexOf(player_token, token)] = -1;
-                opposite_board[token] = 0;
-                if (player == 0)
+                if (opposite_board[token] == 1)
                 {
-                    b_token_total += 1;
-                } else
-                {
-                    w_token_total += 1;
+                    player_token[Array.IndexOf(player_token, token)] = -1;
+                    opposite_board[token] = 0;
+                    if (player == 0)
+                    {
+                        b_token_total += 1;
+                    }
+                    else
+                    {
+                        w_token_total += 1;
+                    }
+                    return true;
                 }
-                return true;
             }
             return false;
         }
