@@ -50,6 +50,12 @@ namespace Royal.Model
             return i;
         }
 
+        public Image[] getImagesDices()
+        {
+            Image[] imageList = { chip2A, chip4A, chip6A, chip1A, chip3A, chip5A };
+            return imageList;
+        }
+
         public Token[] genetareTokenPc() {
             this.tokensPc[0] = new Token("Pc", false, false, Color.Black, Properties.Resources.Picture1);
             this.tokensPc[1] = new Token("Pc", false, false, Color.Black, Properties.Resources.Picture2);

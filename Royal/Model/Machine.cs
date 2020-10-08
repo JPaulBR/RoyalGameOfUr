@@ -25,7 +25,8 @@ namespace Royal
         {
             if (node.isLeaf(node))
             {
-                return node.getFunctionResult(node.ContaintData.initialH, node.ContaintData.initialM, node.ContaintData.finalH, node.ContaintData.finalM);
+                node.Value = node.getFunctionResult(node.ContaintData.initialH, node.ContaintData.initialM, node.ContaintData.finalH, node.ContaintData.finalM);
+                return node.Value;
             }
             switch(node.Child.Length)
             {

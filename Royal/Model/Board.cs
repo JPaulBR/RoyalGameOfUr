@@ -27,6 +27,9 @@ namespace Royal.Model
 
         int[] b_token_active;
         int[] w_token_active;
+        public int[] BlackActive { get => b_token_active; set => b_token_active = value; }
+        public int[] WhiteActive { get => w_token_active; set => w_token_active = value; }
+
 
         int player_turn;
         int TurnCounter;
@@ -34,6 +37,8 @@ namespace Royal.Model
         public int TurnCounterData { get => TurnCounter; set => TurnCounter = value; }
 
         public int PlayerTurn { get => player_turn; set => player_turn = value; }
+        int movedToken;
+        public int LastMovedToken{ get => movedToken; set => movedToken = value; }
 
         public Board(int total = 7)
         {
@@ -83,6 +88,23 @@ namespace Royal.Model
             return result;
         }
 
+        public List<int> MoveableDeep(int[] array1)
+        {
+            List<int> result = new List<int>();
+            for (int i = 0; i < 15; i++)
+            {
+                if (array1[i] != 0)
+                {
+                    result.Add(i);
+                }
+            }
+            for (int i = 0; i < (7-result.Count); i++)
+            {
+                    result.Add(-1);
+            }
+            return result;
+        }
+
         public bool MoveFirstToken(int player, int moves)
         {
             int[] player_token = player == 1 ? b_token_active : w_token_active;
@@ -95,6 +117,7 @@ namespace Royal.Model
                     {
                         player_board[player_token[i] + moves] = 1;
                         player_token[i] += moves;
+                        movedToken = player_token[i];
                         if (player == 0)
                         {
                             w_token_total -= 1;
@@ -127,6 +150,7 @@ namespace Royal.Model
                     {
                         player_token[i] = -2;
                         player_board[token] = 0;
+                        movedToken = 14;
                         if (player == 0)
                         {
                             w_token_out += 1;
@@ -145,6 +169,7 @@ namespace Royal.Model
                                 player_token[i] = token_moved;
                                 player_board[token] = 0;
                                 player_board[token_moved] = 1;
+                                movedToken = token_moved;
                                 CheckRemoveToken(player, player_token[i]);
                                 return true;
                             }
@@ -230,7 +255,7 @@ namespace Royal.Model
         public int ChangeTurn() //talvez hay que cambiar esto
         {
             TurnCounter++;
-            if (IsRoseta(player_turn))
+            if (IsRoseta(player_turn, movedToken))
             {
                 return player_turn;
             }

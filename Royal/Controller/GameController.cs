@@ -10,8 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using static Royal.Machine;
-using Royal.Model;
-using Royal.Model.Tree;
+
 
 namespace Royal.Controller
 {
@@ -29,13 +28,15 @@ namespace Royal.Controller
         private int IdActual;
         private Tree desitionTree;
         private Model.TreeNode actualNode;
-
+        private bool humanRoseta;
+        private bool pcRoseta;
         public Form1 GameForm { get => board; set => board = value; }
 
         public GameController()
         {
             logic_board = new Board();
-
+            humanRoseta = false;
+            pcRoseta = false;
             IdActual = 0;
             LoadTree2();
             pc.Calcminimax(desitionTree, logic_board.PlayerTurn);
@@ -49,23 +50,6 @@ namespace Royal.Controller
                 throwDice();
                 nextPCTurn();
             }
-        }
-
-        private void LoadTree()
-        {
-            List<dataJson> items = pc.LoadJson();
-            List<dataJson> sorted = items.OrderBy(o => o.root).ToList();
-            Tree tree = new Tree();
-            Model.TreeNode node = tree.insertRoot(items[0].id, items[0]);
-            tree.root.printNode();
-            for (int i = 1; i < items.Count; i++)
-            {
-                tree.AddChild(node, items[i].id, items[i].root, items[i]);
-            }
-            actualNode = tree.root;
-            desitionTree = tree;
-            //tree.seeChildren(node); Imprimir todo el árbol
-            //var r = tree.childrenList(node.Child[0].Child[2]); //Función que retorna todos los sucesores del padre
         }
 
         private void LoadTree2()
@@ -167,20 +151,32 @@ namespace Royal.Controller
             this.listButtonPc[14] = this.board.P15;
         }
 
-        public void refreshButtons() {
-            List<int> player1 = logic_board.Moveable(0); // Rojas
-            List<int> player2 = logic_board.Moveable(1); // Amarillas
+        public void refreshButtons(int[] array, int player) {
             for (int i = 0; i < 15; i++)
             {
-                if (!player1.Contains(i) && !player2.Contains(i))
+                if (array[i] == 1 && player == 0)
                 {
-                    listButtonPc[i].BackgroundImage = logicGame.genetareTokenPc()[i].getImage(); //obtain the image from specific i
-                    listButtonPc[i].BackColor = logicGame.genetareTokenPc()[i].getColor();
+                    listButtonPc[i].BackgroundImage = Properties.Resources.ficha2;
                 }
-                if (!player2.Contains(i) && !player1.Contains(i))
+                if (array[i] == 1 && player == 1)
                 {
-                    listButtonHuman[i].BackgroundImage = logicGame.genetareTokenPc()[i].getImage(); //obtain the image from specific i
-                    listButtonHuman[i].BackColor = logicGame.genetareTokenPc()[i].getColor();
+                    listButtonHuman[i].BackgroundImage = Properties.Resources.ficha1;
+                }
+            }
+        }
+
+        //0 is pc 1 is human
+        public void updateBoard(int player)
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                if (player == 0)
+                {
+                    listButtonPc[i].BackgroundImage = logicGame.genetareTokenPc()[i].getImage();
+                }
+                if (player == 1)
+                {
+                    listButtonHuman[i].BackgroundImage = logicGame.genetareTokenHuman()[i].getImage();
                 }
             }
         }
@@ -204,22 +200,33 @@ namespace Royal.Controller
 
         public void throwDice()
         {
-            Image[] resultList;
-            int i = 0;
-            while (i < 1)
-            {
-                resultList = logicGame.throwChips();
-                this.board.chip1.BackgroundImage = resultList[0];
-                this.board.chip2.BackgroundImage = resultList[1];
-                this.board.chip3.BackgroundImage = resultList[2];
-                Thread.Sleep(500);
-                i++;
-            }
-            /*this.steps = logicGame.getStepsCount();
-            if (this.steps == 0) {
-                this.steps = 3;
-            }*/
+            Image[] finalResult = logicGame.getImagesDices();
+            Random random = new Random();
             this.steps = logic_board.GetMove(logic_board.TurnCounterData);
+            if (this.steps == 4 || this.steps == 0)
+            {
+                this.board.chip1.BackgroundImage = finalResult[random.Next(1, 3)];
+                this.board.chip2.BackgroundImage = finalResult[random.Next(1, 3)];
+                this.board.chip3.BackgroundImage = finalResult[random.Next(1, 3)];
+            }
+            if (this.steps == 1)
+            {
+                this.board.chip1.BackgroundImage = finalResult[random.Next(1, 3)];
+                this.board.chip2.BackgroundImage = finalResult[random.Next(1, 3)];
+                this.board.chip3.BackgroundImage = finalResult[random.Next(4, 6)];
+            }
+            if (this.steps == 2)
+            {
+                this.board.chip1.BackgroundImage = finalResult[random.Next(1, 3)];
+                this.board.chip2.BackgroundImage = finalResult[random.Next(4, 6)];
+                this.board.chip3.BackgroundImage = finalResult[random.Next(4, 6)];
+            }
+            if (this.steps == 3)
+            {
+                this.board.chip1.BackgroundImage = finalResult[random.Next(4, 6)];
+                this.board.chip2.BackgroundImage = finalResult[random.Next(4, 6)];
+                this.board.chip3.BackgroundImage = finalResult[random.Next(4, 6)];
+            }
             MessageBox.Show("Avanza " + this.steps);
         }
 
@@ -269,12 +276,17 @@ namespace Royal.Controller
                         logic_board.ChangeTurn();
                         logic_board.PrintBoard();
                         updateCount();
-                        refreshButtons();
+                        updateBoard(1);
+                        refreshButtons(logic_board.BlackPath, 1);
                         //
                         if (logic_board.PlayerTurn == 0)
                         {
+                            humanRoseta = false;
                             throwDice();
                             nextPCTurn();
+                        } else
+                        {
+                            humanRoseta = true;
                         }
                     }
                 }
@@ -286,19 +298,42 @@ namespace Royal.Controller
         {
             if (logic_board.TurnCounterData == 1)
             {
-                logic_board.BlackPath = actualNode.ContaintData.array2;
+                Array.Copy(actualNode.ContaintData.array2, logic_board.BlackPath, 15);
                 logic_board.BlackTotal = actualNode.ContaintData.initialH;
                 logic_board.BlackOut = actualNode.ContaintData.finalH;
-                logic_board.WhitePath = actualNode.ContaintData.array1;
+                Array.Copy(actualNode.ContaintData.array1, logic_board.WhitePath, 15);
                 logic_board.WhiteTotal = actualNode.ContaintData.initialM;
                 logic_board.WhiteOut = actualNode.ContaintData.finalM;
+                logic_board.BlackActive = logic_board.MoveableDeep(logic_board.BlackPath).ToArray();
+                logic_board.WhiteActive = logic_board.MoveableDeep(logic_board.WhitePath).ToArray();
                 logic_board.PrintBoard();
                 logic_board.ChangeTurn();
                 updateCount();
-                refreshButtons();
+                updateBoard(0);
+                refreshButtons(logic_board.WhitePath, 0);
                 return 0;
             }
-            Model.TreeNode intermedio = getMovementForChild(actualNode, logic_board.WhitePath, logic_board.BlackPath); //aqui va la funcion
+            Model.TreeNode intermedio = null;
+            if (humanRoseta)
+            {   //falta
+                foreach (Model.TreeNode t in actualNode.Child)
+                {
+                    intermedio = getMovementForChild(t, logic_board.WhitePath, logic_board.BlackPath);
+                    if (intermedio != null)
+                        break;
+                }
+            } else if (pcRoseta) 
+            {
+                intermedio = actualNode;
+            } else
+            {
+                intermedio = getMovementForChild(actualNode, logic_board.WhitePath, logic_board.BlackPath);
+            }
+            if (intermedio == null)
+            {
+                // Algo va mal
+                return 0;
+            }
             int highest = -8;
             int index = -1;
             int counter;
@@ -314,21 +349,32 @@ namespace Royal.Controller
             if(highest != -8)
             {
                 actualNode = intermedio.Child[index];
-                logic_board.BlackPath = actualNode.ContaintData.array2;
+                Array.Copy(actualNode.ContaintData.array2, logic_board.BlackPath, 15);
                 logic_board.BlackTotal = actualNode.ContaintData.initialH;
                 logic_board.BlackOut = actualNode.ContaintData.finalH;
-                logic_board.WhitePath = actualNode.ContaintData.array1;
+                Array.Copy(actualNode.ContaintData.array1, logic_board.WhitePath, 15);
                 logic_board.WhiteTotal = actualNode.ContaintData.initialM;
                 logic_board.WhiteOut = actualNode.ContaintData.finalM;
+                logic_board.BlackActive = logic_board.MoveableDeep(logic_board.BlackPath).ToArray();
+                logic_board.WhiteActive = logic_board.MoveableDeep(logic_board.WhitePath).ToArray();
             }
-
             logic_board.ChangeTurn();
             updateCount();
-            refreshButtons();
+            updateBoard(0);
+            refreshButtons(logic_board.WhitePath, 0);
+            if (logic_board.PlayerTurn == 0)
+            {
+                pcRoseta = true;
+                throwDice();
+                nextPCTurn();
+            } else
+            {
+                pcRoseta = false;
+            }
             return 0;
         }
 
-	public static Model.TreeNode getMovementForChild(Model.TreeNode node,int[] arrayPc, int[] arrayHm) {
+	    public static Model.TreeNode getMovementForChild(Model.TreeNode node,int[] arrayPc, int[] arrayHm) {
             Model.TreeNode result=null;
             for (int i=0; i< node.NoChildren; i++) {
                 bool verifyPc = isArrayEqual(node.Child[i].ContaintData.array1, arrayPc);

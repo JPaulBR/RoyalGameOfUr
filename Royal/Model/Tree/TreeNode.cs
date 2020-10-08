@@ -14,7 +14,7 @@ namespace Royal.Model
         private TreeNode[] children;
         private dataJson containt;
         public dataJson ContaintData { get => containt; set => containt = value; }
-        public int Value { get; set; }
+        public int Value { get => valueUtility; set => valueUtility = value; }
         public int Data { get => data; set => data = value; }
         public int NoChildren { get => noChildren; set => noChildren = value; }
         public TreeNode[] Child { get => child; set => child = value; }
