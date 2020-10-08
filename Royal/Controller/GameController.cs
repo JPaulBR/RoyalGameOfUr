@@ -282,6 +282,7 @@ namespace Royal.Controller
                             updateCount();
                             updateBoard(1);
                             refreshButtons(logic_board.BlackPath, 1);
+                            refreshButtons(logic_board.WhitePath, 0);
                             //
                             if (index == 3 || index == 7 || index == 13)
                             {
@@ -318,6 +319,7 @@ namespace Royal.Controller
                 updateCount();
                 updateBoard(0);
                 refreshButtons(logic_board.WhitePath, 0);
+                refreshButtons(logic_board.BlackPath, 1);
                 return 0;
             }
             Model.TreeNode intermedio = null;
@@ -386,6 +388,7 @@ namespace Royal.Controller
             updateCount();
             updateBoard(0);
             refreshButtons(logic_board.WhitePath, 0);
+            refreshButtons(logic_board.BlackPath, 1);
             if (logic_board.PlayerTurn == 0)
             {
                 pcRoseta = true;

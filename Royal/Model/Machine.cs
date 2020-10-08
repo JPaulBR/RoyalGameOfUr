@@ -385,7 +385,7 @@ namespace Royal
         public List<dataJson> LoadJson()
         {
             //using (StreamReader r = new StreamReader(@"C:\Users\Jean Paul\Downloads\jsonfileA.json"))
-            using (StreamReader r = new StreamReader(@"D:\Usuarios\gaboq\Escritorio\Gabo\jsonfile.json"))
+            using (StreamReader r = new StreamReader(@"D:\Usuarios\gaboq\Escritorio\Gabo\jsonfileF.json"))
             {
                 string json = r.ReadToEnd();
                 List<dataJson> items = JsonConvert.DeserializeObject<List<dataJson>>(json);
