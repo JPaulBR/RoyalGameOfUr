@@ -29,6 +29,51 @@ namespace Royal
             return index;
         }
 
+        public int CalcAlfaBeta(Tree desitionTree, int turn)
+        {
+            return AlfaBeta(desitionTree.root, (turn == 0 ? true : false), -99, 99);
+        }
+
+        private int AlfaBeta(Model.TreeNode node, bool isMax, int alfa, int beta)
+        {
+            if (node.isLeaf(node))
+            {
+                node.Value = node.getFunctionResult(node.ContaintData.initialH, node.ContaintData.initialM, node.ContaintData.finalH, node.ContaintData.finalM);
+                return node.Value;
+            }
+            if (isMax)
+            {
+                foreach (Model.TreeNode t in node.Child)
+                {
+                    alfa = Math.Max(AlfaBeta(t, t.ContaintData.playerTurn == 0 ? true : false, alfa, beta), alfa);
+                    if (alfa >= beta)
+                    {
+                        node.Value = beta;
+                        return beta;
+                    }
+                }
+                node.Value = alfa;
+                return alfa;
+            }
+            else
+            {
+                foreach (Model.TreeNode t in node.Child)
+                {
+                    beta = Math.Min(AlfaBeta(t, t.ContaintData.playerTurn == 0 ? true : false, alfa, beta), beta);
+                    if (beta <= alfa)
+                    {
+                        node.Value = alfa;
+                        return alfa;
+                    }
+                }
+                node.Value = beta;
+                return beta;
+            }
+        }
+
+
+        /**************************************/
+
         public int Calcminimax(Tree desitionTree, int turn)
         {
             return Minimax(desitionTree.root, (turn==0?true:false));

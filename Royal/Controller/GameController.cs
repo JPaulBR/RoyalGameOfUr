@@ -41,7 +41,8 @@ namespace Royal.Controller
             pcRoseta = false;
             IdActual = 0;
             LoadTree2();
-            pc.Calcminimax(desitionTree, logic_board.PlayerTurn);
+            //pc.Calcminimax(desitionTree, logic_board.PlayerTurn);
+            pc.CalcAlfaBeta(desitionTree, logic_board.PlayerTurn);
             actualNode = desitionTree.root;
             this.touchButton = 0;
             board = new Form1();
