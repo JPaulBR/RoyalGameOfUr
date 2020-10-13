@@ -278,7 +278,7 @@ namespace Royal.Controller
                                 return true;
                             }
                             logic_board.ChangeTurn();
-                            logic_board.PrintBoard();
+                            //logic_board.PrintBoard();
                             updateCount();
                             updateBoard(1);
                             refreshButtons(logic_board.BlackPath, 1);
@@ -314,7 +314,7 @@ namespace Royal.Controller
                 logic_board.WhiteOut = actualNode.ContaintData.finalM;
                 logic_board.BlackActive = logic_board.MoveableDeep(logic_board.BlackPath).ToArray();
                 logic_board.WhiteActive = logic_board.MoveableDeep(logic_board.WhitePath).ToArray();
-                logic_board.PrintBoard();
+                //logic_board.PrintBoard();
                 logic_board.ChangeTurn();
                 updateCount();
                 updateBoard(0);
